@@ -17,8 +17,7 @@ public class ScheduledTaskExecutor implements TaskExecutor {
 
     @Override
     public void execute(Task task) {
-        LOG.debug("execute task - " + task);
-        executorService.schedule(task, 0L, TimeUnit.MILLISECONDS);
+        executorService.schedule(task, 0L, TimeUnit.SECONDS);
     }
 
 }

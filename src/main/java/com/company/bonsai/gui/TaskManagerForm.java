@@ -19,7 +19,6 @@ public class TaskManagerForm {
         runTaskButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Action");
                 taskExecutor.execute(taskFactory.createTask());
             }
         });
