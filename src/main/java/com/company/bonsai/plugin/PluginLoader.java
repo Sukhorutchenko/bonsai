@@ -1,10 +1,10 @@
 package com.company.bonsai.plugin;
 
+import com.company.bonsai.interfaces.plugin.Plugin;
+
 import java.io.File;
-import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package my.task;
+package com.company.bonsai.interfaces.task;
 
 import java.util.List;
 

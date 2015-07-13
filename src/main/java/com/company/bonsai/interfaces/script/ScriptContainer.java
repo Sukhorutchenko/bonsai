@@ -1,4 +1,4 @@
-package com.company.bonsai.script;
+package com.company.bonsai.interfaces.script;
 
 public interface ScriptContainer {
 
