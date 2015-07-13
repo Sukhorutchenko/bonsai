@@ -3,6 +3,10 @@ package com.company.bonsai.script;
 import com.company.bonsai.interfaces.script.Script;
 import com.company.bonsai.interfaces.script.ScriptConfiguration;
 
+import java.io.BufferedReader;
+import java.io.Reader;
+import java.io.StringReader;
+
 public class StubScript implements Script {
 
     private String name;
@@ -30,6 +34,11 @@ public class StubScript implements Script {
     @Override
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public Reader getScriptBody() {
+        return new BufferedReader(new StringReader("print('JavaScript code!'); log.info('JavaScript log!');"));
     }
 
     @Override

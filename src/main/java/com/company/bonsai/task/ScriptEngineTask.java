@@ -1,31 +1,34 @@
 package com.company.bonsai.task;
 
 import com.company.bonsai.interfaces.plugin.Plugin;
+import com.company.bonsai.interfaces.plugin.PluginContainer;
+import com.company.bonsai.interfaces.script.Script;
 import com.company.bonsai.interfaces.task.Task;
 import com.company.bonsai.interfaces.task.TaskConfiguration;
 import com.company.bonsai.interfaces.task.TaskExecutionInfo;
-import com.company.bonsai.plugin.MapPluginContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import java.util.Map;
+import javax.script.ScriptException;
 
 public class ScriptEngineTask implements Task, Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScriptEngineTask.class);
-    public static final String NASHORN_ENGINE_NAME = "nashorn";
-
-    private MapPluginContainer mapPluginContainer;
+    private static final String NASHORN_ENGINE_NAME = "nashorn";
+    private Script script;
+    private PluginContainer pluginContainer;
 
     @Override
     public void run() {
         ScriptEngine engine = createEngine();
         prepareResources(engine);
-
-
-        //engine.eval(new FileReader("script.js"));
+        try {
+            engine.eval(script.getScriptBody());
+        } catch (ScriptException e) {
+            LOG.error("Script failed", e);
+        }
     }
 
     @Override
@@ -36,6 +39,11 @@ public class ScriptEngineTask implements Task, Runnable {
     @Override
     public String getTitle() {
         return null;
+    }
+
+    @Override
+    public Script getScript() {
+        return script;
     }
 
     @Override
@@ -53,12 +61,16 @@ public class ScriptEngineTask implements Task, Runnable {
 
     }
 
-    public MapPluginContainer getMapPluginContainer() {
-        return mapPluginContainer;
+    public void setScript(Script script) {
+        this.script = script;
     }
 
-    public void setMapPluginContainer(MapPluginContainer mapPluginContainer) {
-        this.mapPluginContainer = mapPluginContainer;
+    public PluginContainer getPluginContainer() {
+        return pluginContainer;
+    }
+
+    public void setPluginContainer(PluginContainer pluginContainer) {
+        this.pluginContainer = pluginContainer;
     }
 
     private ScriptEngine createEngine() {
@@ -68,7 +80,7 @@ public class ScriptEngineTask implements Task, Runnable {
 
     private void prepareResources(ScriptEngine engine) {
         injectEnvVars(engine, LOG);
-        injectPlugins(engine, mapPluginContainer);
+        injectPlugins(engine, pluginContainer);
         injectLibs(engine, "libs");
         injectConfigurations(engine, "config");
     }
@@ -77,12 +89,10 @@ public class ScriptEngineTask implements Task, Runnable {
         engine.put("log", log);
     }
 
-    private void injectPlugins(ScriptEngine engine, MapPluginContainer mapPluginContainer) {
-
-        for (Map.Entry<String, Plugin> plugin : mapPluginContainer.getPlugins().entrySet()) {
-            engine.put(plugin.getKey(), plugin.getValue());
+    private void injectPlugins(ScriptEngine engine, PluginContainer pluginContainer) {
+        for (Plugin plugin : pluginContainer.getPlugins()) {
+            engine.put(plugin.getName(), plugin);
         }
-
     }
 
     private void injectLibs(ScriptEngine engine, String libs) {
@@ -92,6 +102,5 @@ public class ScriptEngineTask implements Task, Runnable {
     private void injectConfigurations(ScriptEngine engine, String config) {
 
     }
-
 
 }

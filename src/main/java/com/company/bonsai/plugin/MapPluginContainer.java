@@ -3,7 +3,9 @@ package com.company.bonsai.plugin;
 import com.company.bonsai.interfaces.plugin.Plugin;
 import com.company.bonsai.interfaces.plugin.PluginContainer;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class MapPluginContainer implements PluginContainer {
@@ -19,12 +21,12 @@ public class MapPluginContainer implements PluginContainer {
         return plugins.get(name);
     }
 
-    public Map<String, Plugin> getPlugins() {
-        return plugins;
+    public Collection<Plugin> getPlugins() {
+        return plugins.values();
     }
 
     private void initPlugins(Map<String, Plugin> plugins) {
-        Plugin stubPlugin = new StubPlugin();
+        Plugin stubPlugin = new StubPlugin("StubPlugin");
         plugins.put(stubPlugin.getName(), stubPlugin);
     }
 

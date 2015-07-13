@@ -4,9 +4,12 @@ import com.company.bonsai.interfaces.plugin.PluginContainer;
 import com.company.bonsai.interfaces.script.ScriptContainer;
 import com.company.bonsai.interfaces.task.Task;
 import com.company.bonsai.interfaces.task.TaskFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimpleTaskFactory implements TaskFactory {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleTaskFactory.class);
     private PluginContainer pluginContainer;
     private ScriptContainer scriptContainer;
     private Task taskTree;
@@ -19,7 +22,10 @@ public class SimpleTaskFactory implements TaskFactory {
 
     @Override
     public Task createTask() {
-        return null;
+        ScriptEngineTask task = new ScriptEngineTask();
+        task.setScript(scriptContainer.getScriptByName("StubScript"));
+        task.setPluginContainer(pluginContainer);
+        return task;
     }
 
 }

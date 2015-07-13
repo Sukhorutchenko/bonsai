@@ -16,7 +16,14 @@
         </constraints>
         <properties/>
         <border type="none"/>
-        <children/>
+        <children>
+          <component id="71795" class="javax.swing.JButton" binding="runTaskButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Run task"/>
+            </properties>
+          </component>
+        </children>
       </toolbar>
       <splitpane id="7e7be">
         <constraints>

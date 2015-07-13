@@ -24,7 +24,7 @@ public class MapScriptContainer implements ScriptContainer {
     }
 
     private void initScripts(Map<String, Script> scripts) {
-        Script stubScript = new StubScript();
+        Script stubScript = new StubScript("StubScript");
         scripts.put(stubScript.getName(), stubScript);
     }
 
