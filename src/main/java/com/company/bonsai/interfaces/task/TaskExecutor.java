@@ -1,5 +1,5 @@
 package com.company.bonsai.interfaces.task;
 
-public interface TaskExecutor extends ExecutionQueueListener, Runnable {
+public interface TaskExecutor {
 
 }
