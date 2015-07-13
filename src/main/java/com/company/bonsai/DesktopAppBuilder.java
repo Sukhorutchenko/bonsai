@@ -9,10 +9,12 @@ import com.company.bonsai.interfaces.task.TaskFactory;
 import com.company.bonsai.plugin.MapPluginContainer;
 import com.company.bonsai.script.MapScriptContainer;
 import com.company.bonsai.task.ScriptEngineTaskNode;
-import com.company.bonsai.task.SimpleTaskExecutor;
+import com.company.bonsai.task.ScheduledTaskExecutor;
 import com.company.bonsai.task.SimpleTaskFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
 
 public class DesktopAppBuilder {
 
@@ -38,6 +40,7 @@ public class DesktopAppBuilder {
                 taskFactory, taskExecutor);
         LOG.debug("GUI created");
 
+        SwingUtilities.invokeLater(swingDesktopUI);
     }
 
     private PluginContainer createPluginContainer() {
@@ -59,7 +62,7 @@ public class DesktopAppBuilder {
     }
 
     private TaskExecutor createTaskExecutor() {
-        return new SimpleTaskExecutor();
+        return new ScheduledTaskExecutor();
     }
 
     private SwingDesktopUI createUI(PluginContainer pluginContainer,
