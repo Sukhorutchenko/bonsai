@@ -5,6 +5,7 @@ import com.company.bonsai.interfaces.script.ScriptContainer;
 import com.company.bonsai.interfaces.task.Task;
 import com.company.bonsai.interfaces.task.TaskExecutor;
 import com.company.bonsai.interfaces.task.TaskFactory;
+import com.company.bonsai.task.TaskNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,18 +17,18 @@ public class SwingDesktopUI implements Runnable {
 
     private PluginContainer pluginContainer;
     private ScriptContainer scriptContainer;
-    private Task taskTree;
+    private TaskNode taskTreeRoot;
     private TaskFactory taskFactory;
     private TaskExecutor taskExecutor;
 
     public SwingDesktopUI(PluginContainer pluginContainer,
                           ScriptContainer scriptContainer,
-                          Task taskTree,
+                          TaskNode taskTreeRoot,
                           TaskFactory taskFactory,
                           TaskExecutor taskExecutor) {
         this.pluginContainer = pluginContainer;
         this.scriptContainer = scriptContainer;
-        this.taskTree = taskTree;
+        this.taskTreeRoot = taskTreeRoot;
         this.taskFactory = taskFactory;
         this.taskExecutor = taskExecutor;
     }
@@ -44,7 +45,7 @@ public class SwingDesktopUI implements Runnable {
 
 //        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new TaskManagerForm(taskFactory, taskExecutor).getContentPane());
+        frame.add(new TaskManagerForm(taskTreeRoot, taskFactory, taskExecutor).getContentPane());
 
         frame.pack();
         frame.setVisible(true);

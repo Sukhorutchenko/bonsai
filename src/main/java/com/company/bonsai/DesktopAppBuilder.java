@@ -8,7 +8,7 @@ import com.company.bonsai.interfaces.task.TaskExecutor;
 import com.company.bonsai.interfaces.task.TaskFactory;
 import com.company.bonsai.plugin.MapPluginContainer;
 import com.company.bonsai.script.MapScriptContainer;
-import com.company.bonsai.task.ScriptEngineTaskNode;
+import com.company.bonsai.task.TaskNode;
 import com.company.bonsai.task.ScheduledTaskExecutor;
 import com.company.bonsai.task.SimpleTaskFactory;
 import org.slf4j.Logger;
@@ -27,16 +27,16 @@ public class DesktopAppBuilder {
         ScriptContainer scriptContainer = createScriptContainer();
         LOG.debug("Script Container created");
 
-        Task taskTree = createTaskTree();
+        TaskNode taskTreeRoot = createTaskTree();
         LOG.debug("Task Tree created");
 
-        TaskFactory taskFactory = createTaskFactory(pluginContainer, scriptContainer, taskTree);
+        TaskFactory taskFactory = createTaskFactory(pluginContainer, scriptContainer, taskTreeRoot);
         LOG.debug("Task Factory created");
 
         TaskExecutor taskExecutor = createTaskExecutor();
         LOG.debug("Task Executor created");
 
-        SwingDesktopUI swingDesktopUI = createUI(pluginContainer, scriptContainer, taskTree,
+        SwingDesktopUI swingDesktopUI = createUI(pluginContainer, scriptContainer, taskTreeRoot,
                 taskFactory, taskExecutor);
         LOG.debug("GUI created");
 
@@ -51,14 +51,14 @@ public class DesktopAppBuilder {
         return new MapScriptContainer();
     }
 
-    private Task createTaskTree() {
-        return new ScriptEngineTaskNode();
+    private TaskNode createTaskTree() {
+        return new TaskNode();
     }
 
     private TaskFactory createTaskFactory(PluginContainer pluginContainer,
                                           ScriptContainer scriptContainer,
-                                          Task taskTree) {
-        return new SimpleTaskFactory(pluginContainer, scriptContainer, taskTree);
+                                          TaskNode taskTreeRoot) {
+        return new SimpleTaskFactory(pluginContainer, scriptContainer, taskTreeRoot);
     }
 
     private TaskExecutor createTaskExecutor() {
@@ -67,10 +67,10 @@ public class DesktopAppBuilder {
 
     private SwingDesktopUI createUI(PluginContainer pluginContainer,
                                     ScriptContainer scriptContainer,
-                                    Task taskTree,
+                                    TaskNode taskTreeRoot,
                                     TaskFactory taskFactory,
                                     TaskExecutor taskExecutor) {
-        return new SwingDesktopUI(pluginContainer, scriptContainer, taskTree,
+        return new SwingDesktopUI(pluginContainer, scriptContainer, taskTreeRoot,
                 taskFactory, taskExecutor);
     }
 

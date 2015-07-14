@@ -12,12 +12,12 @@ public class SimpleTaskFactory implements TaskFactory {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleTaskFactory.class);
     private PluginContainer pluginContainer;
     private ScriptContainer scriptContainer;
-    private Task taskTree;
+    private TaskNode taskTreeRoot;
 
-    public SimpleTaskFactory(PluginContainer pluginContainer, ScriptContainer scriptContainer, Task taskTree) {
+    public SimpleTaskFactory(PluginContainer pluginContainer, ScriptContainer scriptContainer, TaskNode taskTreeRoot) {
         this.pluginContainer = pluginContainer;
         this.scriptContainer = scriptContainer;
-        this.taskTree = taskTree;
+        this.taskTreeRoot = taskTreeRoot;
     }
 
     @Override

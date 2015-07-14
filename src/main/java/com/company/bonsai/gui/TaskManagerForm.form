@@ -41,7 +41,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="8f353" class="javax.swing.JTree" binding="tree1" default-binding="true">
+              <component id="8f353" class="javax.swing.JTree" binding="taskTreeWidget" custom-create="true">
                 <constraints/>
                 <properties/>
               </component>
