@@ -1,4 +1,4 @@
-package com.company.bonsai.interfaces.plugin;
+package com.company.bonsai.plugin;
 
 public interface Plugin {
 

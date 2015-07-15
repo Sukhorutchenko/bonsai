@@ -1,9 +1,8 @@
 package com.company.bonsai.task;
 
-import com.company.bonsai.interfaces.plugin.PluginContainer;
-import com.company.bonsai.interfaces.script.ScriptContainer;
-import com.company.bonsai.interfaces.task.Task;
-import com.company.bonsai.interfaces.task.TaskFactory;
+import com.company.bonsai.plugin.PluginContainer;
+import com.company.bonsai.script.ScriptContainer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

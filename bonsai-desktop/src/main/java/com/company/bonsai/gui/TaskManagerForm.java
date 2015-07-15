@@ -1,7 +1,7 @@
 package com.company.bonsai.gui;
 
-import com.company.bonsai.interfaces.task.TaskExecutor;
-import com.company.bonsai.interfaces.task.TaskFactory;
+import com.company.bonsai.task.TaskExecutor;
+import com.company.bonsai.task.TaskFactory;
 import com.company.bonsai.task.TaskNode;
 
 import javax.swing.*;

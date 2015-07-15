@@ -1,4 +1,4 @@
-package com.company.bonsai.interfaces.plugin;
+package com.company.bonsai.plugin;
 
 import java.util.Collection;
 import java.util.Iterator;

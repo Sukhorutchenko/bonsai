@@ -1,11 +1,7 @@
 package com.company.bonsai.plugin;
 
-import com.company.bonsai.interfaces.plugin.Plugin;
-import com.company.bonsai.interfaces.plugin.PluginContainer;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MapPluginContainer implements PluginContainer {

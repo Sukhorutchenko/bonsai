@@ -1,8 +1,5 @@
 package com.company.bonsai.script;
 
-import com.company.bonsai.interfaces.script.Script;
-import com.company.bonsai.interfaces.script.ScriptContainer;
-
 import java.util.HashMap;
 import java.util.Map;
 

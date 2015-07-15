@@ -1,7 +1,5 @@
 package com.company.bonsai.plugin;
 
-import com.company.bonsai.interfaces.plugin.Plugin;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;

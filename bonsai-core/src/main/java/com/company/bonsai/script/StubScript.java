@@ -1,8 +1,5 @@
 package com.company.bonsai.script;
 
-import com.company.bonsai.interfaces.script.Script;
-import com.company.bonsai.interfaces.script.ScriptConfiguration;
-
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.io.StringReader;

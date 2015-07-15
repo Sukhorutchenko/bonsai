@@ -1,4 +1,4 @@
-package com.company.bonsai.interfaces.task;
+package com.company.bonsai.task;
 
 public interface TaskFactory {
 

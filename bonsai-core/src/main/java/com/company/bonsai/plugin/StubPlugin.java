@@ -1,8 +1,5 @@
 package com.company.bonsai.plugin;
 
-import com.company.bonsai.interfaces.plugin.Plugin;
-import com.company.bonsai.interfaces.plugin.PluginConfiguration;
-
 public class StubPlugin implements Plugin {
 
     private String name;

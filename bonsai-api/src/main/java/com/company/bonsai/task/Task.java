@@ -1,6 +1,6 @@
-package com.company.bonsai.interfaces.task;
+package com.company.bonsai.task;
 
-import com.company.bonsai.interfaces.script.Script;
+import com.company.bonsai.script.Script;
 
 public interface Task extends Runnable {
 

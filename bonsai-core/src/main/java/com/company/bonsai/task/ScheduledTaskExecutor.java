@@ -1,7 +1,5 @@
 package com.company.bonsai.task;
 
-import com.company.bonsai.interfaces.task.Task;
-import com.company.bonsai.interfaces.task.TaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
