@@ -6,6 +6,7 @@ import java.util.List;
 public class TaskNode extends ScriptEngineTask {
 
     private final List<TaskNode> childs = new ArrayList<>();
+    private TaskNode parent;
 
     public TaskNode(String name, String title) {
         super(name, title);
@@ -34,6 +35,14 @@ public class TaskNode extends ScriptEngineTask {
     @Override
     public String toString() {
         return getTitle();
+    }
+
+    public TaskNode getParent() {
+        return parent;
+    }
+
+    public void setParent(TaskNode parent) {
+        this.parent = parent;
     }
 
 }
