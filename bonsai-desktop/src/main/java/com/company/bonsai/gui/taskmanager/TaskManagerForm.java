@@ -1,11 +1,10 @@
-package com.company.bonsai.gui;
+package com.company.bonsai.gui.taskmanager;
 
 import com.company.bonsai.task.TaskExecutor;
 import com.company.bonsai.task.TaskFactory;
 import com.company.bonsai.task.TaskNode;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 public class TaskManagerForm {
@@ -32,20 +31,27 @@ public class TaskManagerForm {
     }
 
     private void initWidgets() {
+        initTaskTree();
+        initAddTaskButton();
+        initRemoveTaskButton();
+
+        runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
+    }
+
+    private void initTaskTree() {
         taskTreeWidget.setModel(new TaskTreeModel(taskTreeRoot));
         taskTreeWidget.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-        renderer.setLeafIcon(null);
-        renderer.setClosedIcon(null);
-        renderer.setOpenIcon(null);
-        taskTreeWidget.setCellRenderer(renderer);
+    }
 
+    private void initAddTaskButton() {
         addTaskButton.addActionListener(e -> {
             TaskNode node = (TaskNode) taskTreeWidget.getLastSelectedPathComponent();
             node.add(new TaskNode("nodeName", "nodeTitle"));
             taskTreeWidget.updateUI();
         });
+    }
 
+    private void initRemoveTaskButton() {
         removeTaskButton.addActionListener(e -> {
             TaskNode node = (TaskNode) taskTreeWidget.getLastSelectedPathComponent();
             TaskNode parent = (TaskNode)taskTreeWidget.getSelectionModel().getSelectionPath()
@@ -53,8 +59,6 @@ public class TaskManagerForm {
             parent.remove(node);
             taskTreeWidget.updateUI();
         });
-
-        runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
     }
 
 }

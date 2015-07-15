@@ -1,5 +1,6 @@
 package com.company.bonsai.gui;
 
+import com.company.bonsai.gui.taskmanager.TaskManagerForm;
 import com.company.bonsai.plugin.PluginContainer;
 import com.company.bonsai.script.ScriptContainer;
 import com.company.bonsai.task.TaskExecutor;

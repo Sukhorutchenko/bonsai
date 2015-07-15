@@ -1,6 +1,5 @@
-package com.company.bonsai.gui;
+package com.company.bonsai.gui.taskmanager;
 
-import com.company.bonsai.task.ScriptEngineTask;
 import com.company.bonsai.task.TaskNode;
 
 import javax.swing.event.TreeModelListener;
@@ -10,8 +9,7 @@ import java.util.Vector;
 
 public class TaskTreeModel implements TreeModel {
 
-    private Vector<TreeModelListener> treeModelListeners =
-            new Vector<TreeModelListener>();
+    private Vector<TreeModelListener> treeModelListeners = new Vector<>();
     private TaskNode rootTaskNode;
 
     public TaskTreeModel(TaskNode rootTaskNode) {
@@ -35,7 +33,7 @@ public class TaskTreeModel implements TreeModel {
 
     @Override
     public boolean isLeaf(Object node) {
-        return ScriptEngineTask.class.equals(node.getClass());
+        return ((TaskNode) node).size() == 0;
     }
 
     @Override
