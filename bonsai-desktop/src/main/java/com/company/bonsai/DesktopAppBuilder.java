@@ -19,6 +19,10 @@ public class DesktopAppBuilder {
 
     private static final Logger LOG = LoggerFactory.getLogger(DesktopAppBuilder.class);
 
+    public static void main(String[] args) {
+        new DesktopAppBuilder().build();
+    }
+
     public void build() {
         PluginContainer pluginContainer = createPluginContainer();
         LOG.debug("Plugin Container created");
@@ -52,7 +56,7 @@ public class DesktopAppBuilder {
 
     private TaskNode createTaskTree() {
         TaskNode root = new TaskNode("/", "/");
-        root.add(new TaskNode("wmzona-task", "WMZona task"));
+        root.add(new TaskNode("new-task", "New task"));
         return root;
     }
 
