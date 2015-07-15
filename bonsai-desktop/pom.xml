@@ -19,7 +19,7 @@
 
         <dependency>
             <groupId>com.company</groupId>
-            <artifactId>bonsai-core</artifactId>
+            <artifactId>bonsai-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

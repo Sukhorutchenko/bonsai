@@ -1,8 +1,8 @@
 package com.company.bonsai.gui.task.manager;
 
+import com.company.bonsai.task.Task;
 import com.company.bonsai.task.TaskExecutor;
 import com.company.bonsai.task.TaskFactory;
-import com.company.bonsai.task.TaskNode;
 
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
@@ -15,12 +15,12 @@ public class TaskManagerForm {
     private JButton addTaskButton;
     private JButton removeTaskButton;
 
-    private TaskNode taskTreeRoot;
+    private Task rootTask;
     private TaskFactory taskFactory;
     private TaskExecutor taskExecutor;
 
-    public TaskManagerForm(TaskNode taskTreeRoot, TaskFactory taskFactory, TaskExecutor taskExecutor) {
-        this.taskTreeRoot = taskTreeRoot;
+    public TaskManagerForm(Task rootTask, TaskFactory taskFactory, TaskExecutor taskExecutor) {
+        this.rootTask = rootTask;
         this.taskFactory = taskFactory;
         this.taskExecutor = taskExecutor;
         initWidgets();
@@ -39,24 +39,24 @@ public class TaskManagerForm {
     }
 
     private void initTaskTree() {
-        taskTreeWidget.setModel(new TaskTreeModel(taskTreeRoot));
+        taskTreeWidget.setModel(new TaskTreeModel(rootTask));
         taskTreeWidget.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     }
 
     private void initAddTaskButton() {
         addTaskButton.addActionListener(e -> {
-            TaskNode node = (TaskNode) taskTreeWidget.getLastSelectedPathComponent();
-            node.add(new TaskNode("nodeName", "nodeTitle"));
+            Task node = (Task) taskTreeWidget.getLastSelectedPathComponent();
+//            node.getChildren().add(new Task("nodeName", "nodeTitle"));
             taskTreeWidget.updateUI();
         });
     }
 
     private void initRemoveTaskButton() {
         removeTaskButton.addActionListener(e -> {
-            TaskNode node = (TaskNode) taskTreeWidget.getLastSelectedPathComponent();
-            TaskNode parent = (TaskNode)taskTreeWidget.getSelectionModel().getSelectionPath()
-                    .getParentPath().getLastPathComponent();
-            parent.remove(node);
+//            TaskNode node = (TaskNode) taskTreeWidget.getLastSelectedPathComponent();
+//            TaskNode parent = (TaskNode)taskTreeWidget.getSelectionModel().getSelectionPath()
+//                    .getParentPath().getLastPathComponent();
+//            parent.remove(node);
             taskTreeWidget.updateUI();
         });
     }

@@ -10,13 +10,17 @@ import org.slf4j.LoggerFactory;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class ScriptEngineTask implements Task, Runnable {
+public class ScriptEngineTask implements Task {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScriptEngineTask.class);
     private static final String NASHORN_ENGINE_NAME = "nashorn";
     private String name;
     private String title;
+    private Task parent;
+    private final Collection<Task> children = new ArrayList<>();
     private Script script;
     private PluginContainer pluginContainer;
 
@@ -42,8 +46,33 @@ public class ScriptEngineTask implements Task, Runnable {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public Task getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(Task parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public Collection<Task> getChildren() {
+        return children;
     }
 
     @Override
@@ -52,8 +81,8 @@ public class ScriptEngineTask implements Task, Runnable {
     }
 
     @Override
-    public String getName() {
-        return name;
+    public void setScript(Script script) {
+        this.script = script;
     }
 
     @Override
@@ -61,21 +90,12 @@ public class ScriptEngineTask implements Task, Runnable {
         return null;
     }
 
-    @Override
-    public void setConfiguration(TaskConfiguration configuration) {
-
-    }
+//    public void setConfiguration(TaskConfiguration configuration) {
+//
+//    }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setScript(Script script) {
-        this.script = script;
     }
 
     public PluginContainer getPluginContainer() {

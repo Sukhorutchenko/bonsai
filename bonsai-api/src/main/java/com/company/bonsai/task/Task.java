@@ -1,19 +1,25 @@
 package com.company.bonsai.task;
 
 import com.company.bonsai.script.Script;
+import java.util.List;
 
 public interface Task extends Runnable {
 
     String getName();
 
     String getTitle();
+    void setTitle(String title);
 
-    Script getScript();
+    Task getParent();
+    void setParent(Task parent);
 
-    TaskExecutionInfo getExecutionInfo();
+    List<Task> getChildren();
 
     TaskConfiguration getConfiguration();
 
-    void setConfiguration(TaskConfiguration configuration);
+    Script getScript();
+    void setScript(Script script);
+
+    TaskExecutionInfo getExecutionInfo();
 
 }

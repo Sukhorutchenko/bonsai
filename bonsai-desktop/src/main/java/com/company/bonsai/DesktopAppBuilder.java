@@ -1,3 +1,4 @@
+/*
 package com.company.bonsai;
 
 import com.company.bonsai.gui.SwingDesktopUI;
@@ -78,3 +79,4 @@ public class DesktopAppBuilder {
     }
 
 }
+*/
