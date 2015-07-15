@@ -22,7 +22,7 @@ public class SimpleTaskFactory implements TaskFactory {
 
     @Override
     public Task createTask() {
-        ScriptEngineTask task = new ScriptEngineTask();
+        ScriptEngineTask task = new ScriptEngineTask("stub-script", "Stub Script");
         task.setScript(scriptContainer.getScriptByName("StubScript"));
         task.setPluginContainer(pluginContainer);
         return task;

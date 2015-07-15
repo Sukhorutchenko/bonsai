@@ -45,6 +45,7 @@ public class SwingDesktopUI implements Runnable {
 
 //        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setLocationRelativeTo(null);
         frame.add(new TaskManagerForm(taskTreeRoot, taskFactory, taskExecutor).getContentPane());
 
         frame.pack();

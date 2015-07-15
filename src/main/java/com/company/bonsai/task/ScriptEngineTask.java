@@ -17,8 +17,15 @@ public class ScriptEngineTask implements Task, Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScriptEngineTask.class);
     private static final String NASHORN_ENGINE_NAME = "nashorn";
+    private String name;
+    private String title;
     private Script script;
     private PluginContainer pluginContainer;
+
+    public ScriptEngineTask(String name, String title) {
+        this.name = name;
+        this.title = title;
+    }
 
     @Override
     public void run() {
@@ -38,7 +45,7 @@ public class ScriptEngineTask implements Task, Runnable {
 
     @Override
     public String getTitle() {
-        return null;
+        return title;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class ScriptEngineTask implements Task, Runnable {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
@@ -59,6 +66,14 @@ public class ScriptEngineTask implements Task, Runnable {
     @Override
     public void setConfiguration(TaskConfiguration configuration) {
 
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setScript(Script script) {

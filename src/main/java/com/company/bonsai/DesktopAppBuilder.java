@@ -52,7 +52,9 @@ public class DesktopAppBuilder {
     }
 
     private TaskNode createTaskTree() {
-        return new TaskNode();
+        TaskNode root = new TaskNode("/", "/");
+        root.add(new TaskNode("wmzona-task", "WMZona task"));
+        return root;
     }
 
     private TaskFactory createTaskFactory(PluginContainer pluginContainer,

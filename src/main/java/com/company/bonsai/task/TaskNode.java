@@ -7,6 +7,10 @@ public class TaskNode extends ScriptEngineTask {
 
     private final List<TaskNode> childs = new ArrayList<>();
 
+    public TaskNode(String name, String title) {
+        super(name, title);
+    }
+
     public void add(TaskNode element) {
         childs.add(element);
     }
@@ -25,6 +29,11 @@ public class TaskNode extends ScriptEngineTask {
 
     public int size() {
         return childs.size();
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
     }
 
 }

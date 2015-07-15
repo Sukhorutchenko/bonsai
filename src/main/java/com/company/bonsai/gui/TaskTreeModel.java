@@ -6,9 +6,12 @@ import com.company.bonsai.task.TaskNode;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import java.util.Vector;
 
 public class TaskTreeModel implements TreeModel {
 
+    private Vector<TreeModelListener> treeModelListeners =
+            new Vector<TreeModelListener>();
     private TaskNode rootTaskNode;
 
     public TaskTreeModel(TaskNode rootTaskNode) {
@@ -47,12 +50,12 @@ public class TaskTreeModel implements TreeModel {
 
     @Override
     public void addTreeModelListener(TreeModelListener l) {
-
+        treeModelListeners.addElement(l);
     }
 
     @Override
     public void removeTreeModelListener(TreeModelListener l) {
-
+        treeModelListeners.removeElement(l);
     }
 
 }
