@@ -55,9 +55,7 @@ public class DesktopAppBuilder {
     }
 
     private TaskNode createTaskTree() {
-        TaskNode root = new TaskNode("/", "/");
-        root.add(new TaskNode("new-task", "New task"));
-        return root;
+        return new TaskNode("/", "/");
     }
 
     private TaskFactory createTaskFactory(PluginContainer pluginContainer,

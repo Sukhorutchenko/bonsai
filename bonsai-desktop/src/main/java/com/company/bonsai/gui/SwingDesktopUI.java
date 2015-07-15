@@ -1,6 +1,6 @@
 package com.company.bonsai.gui;
 
-import com.company.bonsai.gui.taskmanager.TaskManagerForm;
+import com.company.bonsai.gui.task.manager.TaskManagerFrame;
 import com.company.bonsai.plugin.PluginContainer;
 import com.company.bonsai.script.ScriptContainer;
 import com.company.bonsai.task.TaskExecutor;
@@ -40,16 +40,8 @@ public class SwingDesktopUI implements Runnable {
         } catch (Exception e) {
             LOG.error("Failed to set system look and feel to UI");
         }
-
-        JFrame frame = new JFrame("Bonsai");
-
-//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-        frame.add(new TaskManagerForm(taskTreeRoot, taskFactory, taskExecutor).getContentPane());
-
-        frame.pack();
-        frame.setVisible(true);
+        TaskManagerFrame taskManager = new TaskManagerFrame(taskTreeRoot, taskFactory, taskExecutor);
+        taskManager.setVisible(true);
     }
 
 }

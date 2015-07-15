@@ -1,4 +1,4 @@
-package com.company.bonsai.gui.taskmanager;
+package com.company.bonsai.gui.task.manager;
 
 import com.company.bonsai.task.TaskNode;
 
