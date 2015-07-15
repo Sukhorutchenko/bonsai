@@ -12,6 +12,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ScriptEngineTask implements Task {
 
@@ -20,7 +21,7 @@ public class ScriptEngineTask implements Task {
     private String name;
     private String title;
     private Task parent;
-    private final Collection<Task> children = new ArrayList<>();
+    private final List<Task> children = new ArrayList<>();
     private Script script;
     private PluginContainer pluginContainer;
 
@@ -71,7 +72,7 @@ public class ScriptEngineTask implements Task {
     }
 
     @Override
-    public Collection<Task> getChildren() {
+    public List<Task> getChildren() {
         return children;
     }
 

@@ -10,7 +10,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bonsai-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>bonsai-desktopUI</artifactId>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.company</groupId>
+            <artifactId>bonsai-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>
