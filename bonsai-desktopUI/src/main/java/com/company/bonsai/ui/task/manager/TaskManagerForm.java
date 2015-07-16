@@ -1,13 +1,15 @@
 package com.company.bonsai.ui.task.manager;
 
 import com.company.bonsai.task.Task;
-import com.company.bonsai.task.TaskExecutor;
-import com.company.bonsai.task.TaskFactory;
+import com.company.bonsai.ui.task.configurator.TaskConfigurator;
 
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
 
 public class TaskManagerForm {
+
+    private TaskManager taskManager;
+
     private JPanel contentPane;
     private JTree taskTreeWidget;
     private JTable table1;
@@ -15,14 +17,8 @@ public class TaskManagerForm {
     private JButton addTaskButton;
     private JButton removeTaskButton;
 
-    private Task rootTask;
-    private TaskFactory taskFactory;
-    private TaskExecutor taskExecutor;
-
-    public TaskManagerForm(Task rootTask, TaskFactory taskFactory, TaskExecutor taskExecutor) {
-        this.rootTask = rootTask;
-        this.taskFactory = taskFactory;
-        this.taskExecutor = taskExecutor;
+    public TaskManagerForm(TaskManager taskManager) {
+        this.taskManager = taskManager;
         initWidgets();
     }
 
@@ -35,18 +31,21 @@ public class TaskManagerForm {
         initAddTaskButton();
         initRemoveTaskButton();
 
-        runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
+        //runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
     }
 
     private void initTaskTree() {
-        taskTreeWidget.setModel(new TaskTreeModel(rootTask));
+        taskTreeWidget.setModel(new TaskTreeModel(taskManager.getRootTask()));
         taskTreeWidget.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     }
 
     private void initAddTaskButton() {
         addTaskButton.addActionListener(e -> {
-            Task node = (Task) taskTreeWidget.getLastSelectedPathComponent();
-//            node.getChildren().add(new Task("nodeName", "nodeTitle"));
+            Task task = (Task) taskTreeWidget.getLastSelectedPathComponent();
+            if (task == null) {
+                task = taskManager.getRootTask();
+            }
+            taskManager.addTask(task);
             taskTreeWidget.updateUI();
         });
     }

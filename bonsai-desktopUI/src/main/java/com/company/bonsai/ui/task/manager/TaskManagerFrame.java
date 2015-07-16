@@ -1,20 +1,20 @@
 package com.company.bonsai.ui.task.manager;
 
-import com.company.bonsai.task.Task;
-import com.company.bonsai.task.TaskExecutor;
-import com.company.bonsai.task.TaskFactory;
-
 import javax.swing.JFrame;
 import java.awt.HeadlessException;
 
 public class TaskManagerFrame extends JFrame {
 
     private final static String TASK_MANAGER_FRAME_TITLE = "Task Manager";
+    private TaskManager taskManager;
 
-    public TaskManagerFrame(Task rootTask, TaskFactory taskFactory, TaskExecutor taskExecutor) throws HeadlessException {
+    public TaskManagerFrame(TaskManager taskManager) throws HeadlessException {
         super(TASK_MANAGER_FRAME_TITLE);
+
+        this.taskManager = taskManager;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new TaskManagerForm(rootTask, taskFactory, taskExecutor).getContentPane());
+        add(new TaskManagerForm(taskManager).getContentPane());
         pack();
         setLocationRelativeTo(null);
     }

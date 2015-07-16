@@ -15,14 +15,8 @@
 
     <bean id="pluginContainer" class="com.company.bonsai.plugin.MapPluginContainer" />
     <bean id="scriptContainer" class="com.company.bonsai.script.MapScriptContainer" />
-    <bean id="rootTask" class="com.company.bonsai.task.ScriptEngineTask"
-          c:name="nameval" c:title="titleval" />
-
-    <bean id="taskFactory" class="com.company.bonsai.task.SimpleTaskFactory"
-          c:pluginContainer-ref="pluginContainer"
-          c:scriptContainer-ref="scriptContainer"
-          c:rootTask-ref="rootTask" />
-
+    <bean id="taskFactory" class="com.company.bonsai.task.SimpleTaskFactory" />
     <bean id="taskExecutor" class="com.company.bonsai.task.ScheduledTaskExecutor" />
+    <bean id="rootTask" class="com.company.bonsai.task.ScriptEngineTask" c:name="root" />
 
 </beans>
