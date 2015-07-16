@@ -1,7 +1,6 @@
 package com.company.bonsai.ui.task.manager;
 
 import com.company.bonsai.task.Task;
-import com.company.bonsai.ui.task.configurator.TaskConfigurator;
 
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
@@ -16,6 +15,7 @@ public class TaskManagerForm {
     private JButton runTaskButton;
     private JButton addTaskButton;
     private JButton removeTaskButton;
+    private JButton configTaskButton;
 
     public TaskManagerForm(TaskManager taskManager) {
         this.taskManager = taskManager;
@@ -30,6 +30,7 @@ public class TaskManagerForm {
         initTaskTree();
         initAddTaskButton();
         initRemoveTaskButton();
+        initConfigTaskButton();
 
         //runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
     }
@@ -41,23 +42,31 @@ public class TaskManagerForm {
 
     private void initAddTaskButton() {
         addTaskButton.addActionListener(e -> {
-            Task task = (Task) taskTreeWidget.getLastSelectedPathComponent();
-            if (task == null) {
-                task = taskManager.getRootTask();
-            }
-            taskManager.addTask(task);
+            taskManager.addTask(getSelectedOrRoot());
             taskTreeWidget.updateUI();
         });
     }
 
     private void initRemoveTaskButton() {
         removeTaskButton.addActionListener(e -> {
-//            TaskNode node = (TaskNode) taskTreeWidget.getLastSelectedPathComponent();
-//            TaskNode parent = (TaskNode)taskTreeWidget.getSelectionModel().getSelectionPath()
-//                    .getParentPath().getLastPathComponent();
-//            parent.remove(node);
+            taskManager.removeTask(getSelectedOrRoot());
             taskTreeWidget.updateUI();
         });
+    }
+
+    private void initConfigTaskButton() {
+        configTaskButton.addActionListener(e -> {
+            taskManager.configureTask(getSelectedOrRoot());
+            taskTreeWidget.updateUI();
+        });
+    }
+
+    private Task getSelectedOrRoot() {
+        Task task = (Task) taskTreeWidget.getLastSelectedPathComponent();
+        if (task == null) {
+            task = taskManager.getRootTask();
+        }
+        return task;
     }
 
 }

@@ -76,11 +76,7 @@ public class StubScript implements Script {
 
     @Override
     public String toString() {
-        return "StubScript{" +
-                "name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                ", configuration=" + configuration +
-                '}';
+        return name;
     }
 
 }

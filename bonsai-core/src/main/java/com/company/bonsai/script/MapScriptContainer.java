@@ -1,6 +1,8 @@
 package com.company.bonsai.script;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapScriptContainer implements ScriptContainer {
@@ -16,8 +18,9 @@ public class MapScriptContainer implements ScriptContainer {
         return scripts.get(name);
     }
 
-    public Map<String, Script> getScripts() {
-        return scripts;
+    @Override
+    public List<Script> getScripts() {
+        return new ArrayList<>(scripts.values());
     }
 
     private void initScripts(Map<String, Script> scripts) {

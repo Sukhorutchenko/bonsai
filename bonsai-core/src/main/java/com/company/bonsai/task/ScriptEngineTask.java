@@ -3,6 +3,7 @@ package com.company.bonsai.task;
 import com.company.bonsai.plugin.Plugin;
 import com.company.bonsai.plugin.PluginContainer;
 
+import com.company.bonsai.script.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,8 @@ public class ScriptEngineTask implements Task {
     private Task parent;
     private final List<Task> children = new ArrayList<>();
     private String name;
+    private Script script;
+    private long delay;
 
     public ScriptEngineTask(String name) {
         this.name = name;
@@ -70,8 +73,28 @@ public class ScriptEngineTask implements Task {
     }
 
     @Override
+    public Script getScript() {
+        return script;
+    }
+
+    @Override
+    public void setScript(Script script) {
+        this.script = script;
+    }
+
+    @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public long getDelay() {
+        return delay;
+    }
+
+    @Override
+    public void setDelay(long delay) {
+        this.delay = delay;
     }
 
     private ScriptEngine createEngine() {

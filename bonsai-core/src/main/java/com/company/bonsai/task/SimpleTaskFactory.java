@@ -4,7 +4,7 @@ public class SimpleTaskFactory implements TaskFactory {
 
     @Override
     public Task createTask(Task parent) {
-        return new ScriptEngineTask(parent, "new-task");
+        return new ScriptEngineTask(parent, NEW_TASK_NAME);
     }
 
 }
