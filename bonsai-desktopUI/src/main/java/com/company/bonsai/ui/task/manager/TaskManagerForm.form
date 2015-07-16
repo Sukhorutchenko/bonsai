@@ -16,19 +16,25 @@
             <preferred-size width="-1" height="20"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <floatable value="false"/>
+          <rollover value="true"/>
+        </properties>
+        <clientProperties>
+          <JToolBar.isRollover class="java.lang.Boolean" value="true"/>
+        </clientProperties>
         <border type="none"/>
         <children>
           <component id="74265" class="javax.swing.JButton" binding="addTaskButton">
             <constraints/>
             <properties>
-              <text value="Add Task"/>
+              <text value="Add"/>
             </properties>
           </component>
           <component id="fb2b8" class="javax.swing.JButton" binding="removeTaskButton">
             <constraints/>
             <properties>
-              <text value="Remove Task"/>
+              <text value="Remove"/>
             </properties>
           </component>
           <component id="46361" class="javax.swing.JButton" binding="configTaskButton">
@@ -37,10 +43,14 @@
               <text value="Config"/>
             </properties>
           </component>
-          <component id="71795" class="javax.swing.JButton" binding="runTaskButton" default-binding="true">
+          <component id="4692c" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="71795" class="javax.swing.JButton" binding="runTaskButton">
             <constraints/>
             <properties>
-              <text value="Run task"/>
+              <text value="Run"/>
             </properties>
           </component>
         </children>
