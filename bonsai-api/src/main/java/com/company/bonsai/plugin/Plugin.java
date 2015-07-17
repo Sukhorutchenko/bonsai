@@ -2,9 +2,9 @@ package com.company.bonsai.plugin;
 
 public interface Plugin {
 
-    String getTitle();
-
     String getName();
+
+    Class getFacade();
 
     PluginConfiguration getConfiguration();
 

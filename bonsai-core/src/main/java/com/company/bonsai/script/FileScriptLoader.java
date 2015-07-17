@@ -1,6 +1,7 @@
 package com.company.bonsai.script;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class FileScriptLoader {
 
     public List<Script> loadAllScripts() {
         List<Script> scripts = new ArrayList<>();
-        for(File scriptFile : scriptsDirectory.listFiles()) {
+        File[] scriptFiles = scriptsDirectory.listFiles(file -> file.isFile() && file.getName().endsWith(".js"));
+        for(File scriptFile : scriptFiles) {
             try {
                 Script script = loadScript(scriptFile);
                 scripts.add(script);
