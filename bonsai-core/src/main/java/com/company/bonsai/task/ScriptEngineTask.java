@@ -42,7 +42,7 @@ public class ScriptEngineTask implements Task {
         ScriptEngine engine = createEngine();
         prepareResources(engine);
         try {
-            engine.eval(script.getScriptBody());
+            engine.eval(getScript().getScriptBody());
         } catch (ScriptException e) {
             LOG.error("Script failed", e);
         }
@@ -75,7 +75,12 @@ public class ScriptEngineTask implements Task {
 
     @Override
     public Script getScript() {
-        return script;
+        if (script != null) {
+            return script;
+        } else if (parent != null){
+            return parent.getScript();
+        }
+        return null;
     }
 
     @Override
