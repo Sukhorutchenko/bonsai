@@ -6,8 +6,4 @@ public interface Plugin {
 
     Object getFacade();
 
-    PluginConfiguration getConfiguration();
-
-    void setConfiguration(PluginConfiguration configuration);
-
 }
