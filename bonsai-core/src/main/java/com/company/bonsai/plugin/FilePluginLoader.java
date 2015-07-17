@@ -2,11 +2,6 @@ package com.company.bonsai.plugin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
-import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
-import org.springframework.core.type.filter.AssignableTypeFilter;
-import org.springframework.core.type.filter.TypeFilter;
 
 import java.io.File;
 import java.io.IOException;
