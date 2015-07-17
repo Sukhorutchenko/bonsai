@@ -1,7 +1,9 @@
 package com.company.bonsai.plugin.libs;
 
-public interface LibsPluginFacade {
+public class LibsPluginFacade {
 
-    String sayHello();
+    public String sayHello() {
+        return "Libs Plugin Hello string";
+    }
 
 }

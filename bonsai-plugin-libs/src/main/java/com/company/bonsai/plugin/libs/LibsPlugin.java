@@ -3,7 +3,7 @@ package com.company.bonsai.plugin.libs;
 import com.company.bonsai.plugin.Plugin;
 import com.company.bonsai.plugin.PluginConfiguration;
 
-public class LibsPlugin implements Plugin, LibsPluginFacade {
+public class LibsPlugin implements Plugin {
 
     private static final String PLUGIN_NAME = "libs";
 
@@ -13,8 +13,8 @@ public class LibsPlugin implements Plugin, LibsPluginFacade {
     }
 
     @Override
-    public Class getFacade() {
-        return LibsPluginFacade.class;
+    public Object getFacade() {
+        return new LibsPluginFacade();
     }
 
     @Override
@@ -25,11 +25,6 @@ public class LibsPlugin implements Plugin, LibsPluginFacade {
     @Override
     public void setConfiguration(PluginConfiguration configuration) {
 
-    }
-
-    @Override
-    public String sayHello() {
-        return "Libs Plugin Hello string";
     }
 
 }

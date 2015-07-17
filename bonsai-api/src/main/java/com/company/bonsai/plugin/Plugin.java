@@ -4,7 +4,7 @@ public interface Plugin {
 
     String getName();
 
-    Class getFacade();
+    Object getFacade();
 
     PluginConfiguration getConfiguration();
 

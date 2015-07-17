@@ -13,13 +13,17 @@
     <context:annotation-config />
     <context:property-placeholder location="classpath:bonsai-core.properties" />
 
-    <bean id="pluginContainer" class="com.company.bonsai.plugin.MapPluginContainer" />
+    <bean id="pluginLoader" class="com.company.bonsai.plugin.FilePluginLoader"
+          c:pluginsDirectoryPath="${plugins-path}" />
+    <bean id="pluginContainer" class="com.company.bonsai.plugin.MapPluginContainer"
+          c:pluginLoader-ref="pluginLoader" />
     <bean id="scriptLoader" class="com.company.bonsai.script.FileScriptLoader"
-          c:scriptsDirectoryPath="${scripts-folder}" />
+          c:scriptsDirectoryPath="${scripts-path}" />
     <bean id="scriptContainer" class="com.company.bonsai.script.MapScriptContainer"
           c:scriptLoader-ref="scriptLoader" />
-    <bean id="taskFactory" class="com.company.bonsai.task.SimpleTaskFactory" />
+    <bean id="taskFactory" class="com.company.bonsai.task.SimpleTaskFactory"
+          c:pluginContainer-ref="pluginContainer" />
     <bean id="taskExecutor" class="com.company.bonsai.task.ScheduledTaskExecutor" />
-    <bean id="rootTask" class="com.company.bonsai.task.ScriptEngineTask" c:name="root" />
+    <bean id="rootTaskConfiguration" class="com.company.bonsai.task.ScriptEngineTaskConfiguration" c:name="root" />
 
 </beans>

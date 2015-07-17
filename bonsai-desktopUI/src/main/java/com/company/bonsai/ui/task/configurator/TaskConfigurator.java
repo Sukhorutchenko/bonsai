@@ -1,24 +1,24 @@
 package com.company.bonsai.ui.task.configurator;
 
 import com.company.bonsai.script.ScriptContainer;
-import com.company.bonsai.task.Task;
+import com.company.bonsai.task.TaskConfiguration;
 import com.company.bonsai.ui.DialogResult;
 
 public class TaskConfigurator {
 
-    private final Task task;
+    private final TaskConfiguration taskConfiguration;
     private final ScriptContainer scriptContainer;
     private TaskConfiguratorDialog dialog;
     private DialogResult dialogResult;
 
-    public TaskConfigurator(Task task, ScriptContainer scriptContainer) {
-        this.task = task;
+    public TaskConfigurator(TaskConfiguration taskConfiguration, ScriptContainer scriptContainer) {
+        this.taskConfiguration = taskConfiguration;
         this.scriptContainer = scriptContainer;
         this.dialog = createDialog();
     }
 
-    public Task getTask() {
-        return task;
+    public TaskConfiguration getTaskConfiguration() {
+        return taskConfiguration;
     }
 
     public ScriptContainer getScriptContainer() {

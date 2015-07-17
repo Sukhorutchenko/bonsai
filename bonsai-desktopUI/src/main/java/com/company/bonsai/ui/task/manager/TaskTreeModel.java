@@ -1,6 +1,6 @@
 package com.company.bonsai.ui.task.manager;
 
-import com.company.bonsai.task.Task;
+import com.company.bonsai.task.TaskConfiguration;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -10,30 +10,30 @@ import java.util.Vector;
 public class TaskTreeModel implements TreeModel {
 
     private Vector<TreeModelListener> treeModelListeners = new Vector<>();
-    private Task rootTask;
+    private TaskConfiguration rootTaskConfiguration;
 
-    public TaskTreeModel(Task rootTask) {
-        this.rootTask = rootTask;
+    public TaskTreeModel(TaskConfiguration rootTaskConfiguration) {
+        this.rootTaskConfiguration = rootTaskConfiguration;
     }
 
     @Override
     public Object getRoot() {
-        return rootTask;
+        return rootTaskConfiguration;
     }
 
     @Override
     public Object getChild(Object parent, int index) {
-        return ((Task) parent).getChildren().get(index);
+        return ((TaskConfiguration) parent).getChildren().get(index);
     }
 
     @Override
     public int getChildCount(Object parent) {
-        return ((Task) parent).getChildren().size();
+        return ((TaskConfiguration) parent).getChildren().size();
     }
 
     @Override
     public boolean isLeaf(Object node) {
-        return ((Task) node).getChildren().size() == 0;
+        return ((TaskConfiguration) node).getChildren().size() == 0;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TaskTreeModel implements TreeModel {
 
     @Override
     public int getIndexOfChild(Object parent, Object child) {
-        return ((Task) parent).getChildren().indexOf(child);
+        return ((TaskConfiguration) parent).getChildren().indexOf(child);
     }
 
     @Override

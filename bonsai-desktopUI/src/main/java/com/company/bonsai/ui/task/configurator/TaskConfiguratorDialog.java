@@ -1,7 +1,7 @@
 package com.company.bonsai.ui.task.configurator;
 
 import com.company.bonsai.script.Script;
-import com.company.bonsai.task.Task;
+import com.company.bonsai.task.TaskConfiguration;
 import com.company.bonsai.task.TaskFactory;
 import com.company.bonsai.ui.DialogResult;
 import org.springframework.util.StringUtils;
@@ -33,7 +33,7 @@ public class TaskConfiguratorDialog extends JDialog {
 
     public TaskConfiguratorDialog(TaskConfigurator taskConfigurator) {
         this.taskConfigurator = taskConfigurator;
-        setTitle(taskConfigurator.getTask().getName() + TASK_CONFIGURATOR_FRAME_TITLE_SUFFIX);
+        setTitle(taskConfigurator.getTaskConfiguration().getName() + TASK_CONFIGURATOR_FRAME_TITLE_SUFFIX);
         setContentPane(contentPane);
         initWidgets();
         pack();
@@ -43,11 +43,11 @@ public class TaskConfiguratorDialog extends JDialog {
     }
 
     private void initWidgets() {
-        Task task = taskConfigurator.getTask();
-        taskNameField.setText(task.getName());
-        taskDelaySpinner.setValue((int) task.getDelay());
+        TaskConfiguration taskConfiguration = taskConfigurator.getTaskConfiguration();
+        taskNameField.setText(taskConfiguration.getName());
+        taskDelaySpinner.setValue((int) taskConfiguration.getDelay());
         taskScriptCombo.setModel(new ScriptsComboModel(taskConfigurator.getScriptContainer()));
-        taskScriptCombo.setSelectedItem(taskConfigurator.getTask().getScript());
+        taskScriptCombo.setSelectedItem(taskConfigurator.getTaskConfiguration().getScript());
 
         buttonOK.addActionListener(e -> onOK());
 
@@ -80,12 +80,12 @@ public class TaskConfiguratorDialog extends JDialog {
         if (StringUtils.isEmpty(name)) {
             name = TaskFactory.NEW_TASK_NAME;
         }
-        taskConfigurator.getTask().setName(name);
+        taskConfigurator.getTaskConfiguration().setName(name);
 
-        taskConfigurator.getTask().setScript((Script) taskScriptCombo.getSelectedItem());
+        taskConfigurator.getTaskConfiguration().setScript((Script) taskScriptCombo.getSelectedItem());
 
         long delay = (int) taskDelaySpinner.getValue();
-        taskConfigurator.getTask().setDelay(delay);
+        taskConfigurator.getTaskConfiguration().setDelay(delay);
     }
 
 }
