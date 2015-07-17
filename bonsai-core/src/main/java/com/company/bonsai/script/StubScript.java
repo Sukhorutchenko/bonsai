@@ -8,6 +8,7 @@ public class StubScript implements Script {
 
     private String name;
     private String title;
+    private String code = "print('JavaScript code!');";
     private ScriptConfiguration configuration;
 
     public StubScript() {
@@ -20,6 +21,12 @@ public class StubScript implements Script {
     public StubScript(String name, String title) {
         this.name = name;
         this.title = title;
+    }
+
+    public StubScript(String name, String title, String code) {
+        this.name = name;
+        this.title = title;
+        this.code = code;
     }
 
     public StubScript(String name, String title, ScriptConfiguration configuration) {
@@ -35,7 +42,7 @@ public class StubScript implements Script {
 
     @Override
     public Reader getScriptBody() {
-        return new BufferedReader(new StringReader("print('JavaScript code!'); log.info('JavaScript log!');"));
+        return new BufferedReader(new StringReader(code));
     }
 
     @Override

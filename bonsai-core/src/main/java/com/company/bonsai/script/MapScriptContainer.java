@@ -24,8 +24,10 @@ public class MapScriptContainer implements ScriptContainer {
     }
 
     private void initScripts(Map<String, Script> scripts) {
-        Script stubScript = new StubScript("StubScript");
-        scripts.put(stubScript.getName(), stubScript);
+        Script stubScript1 = new StubScript("StubScript1", "StubScript", "print('JavaScript code1!');" );
+        Script stubScript2 = new StubScript("StubScript2", "StubScript", "print('JavaScript code2!');" );
+        scripts.put(stubScript1.getName(), stubScript1);
+        scripts.put(stubScript2.getName(), stubScript2);
     }
 
 }

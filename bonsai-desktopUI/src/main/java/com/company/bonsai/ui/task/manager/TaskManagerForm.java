@@ -32,7 +32,7 @@ public class TaskManagerForm {
         initRemoveTaskButton();
         initConfigTaskButton();
 
-        //runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
+        runTaskButton.addActionListener(e -> taskManager.runTask(getSelectedOrRoot()));
     }
 
     private void initTaskTree() {

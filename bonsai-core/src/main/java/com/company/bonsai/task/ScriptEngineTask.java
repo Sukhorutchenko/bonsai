@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +39,13 @@ public class ScriptEngineTask implements Task {
 
     @Override
     public void run() {
-//        ScriptEngine engine = createEngine();
-//        prepareResources(engine);
-//        try {
-//            engine.eval(script.getScriptBody());
-//        } catch (ScriptException e) {
-//            LOG.error("Script failed", e);
-//        }
+        ScriptEngine engine = createEngine();
+        prepareResources(engine);
+        try {
+            engine.eval(script.getScriptBody());
+        } catch (ScriptException e) {
+            LOG.error("Script failed", e);
+        }
     }
 
     @Override
