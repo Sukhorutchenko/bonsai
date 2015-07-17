@@ -43,28 +43,13 @@ public class ScriptEngineTask implements Task {
     }
 
     private void prepareResources(ScriptEngine engine) {
-//        injectEnvVars(engine, LOG);
         injectPlugins(engine, pluginContainer);
-//        injectLibs(engine, "libs");
-//        injectConfigurations(engine, "config");
-    }
-
-    private void injectEnvVars(ScriptEngine engine, Logger log) {
-        engine.put("log", log);
     }
 
     private void injectPlugins(ScriptEngine engine, PluginContainer pluginContainer) {
         for (Plugin plugin : pluginContainer.getPlugins()) {
             engine.put(plugin.getName(), plugin.getFacade());
         }
-    }
-
-    private void injectLibs(ScriptEngine engine, String libs) {
-
-    }
-
-    private void injectConfigurations(ScriptEngine engine, String config) {
-
     }
 
 }
