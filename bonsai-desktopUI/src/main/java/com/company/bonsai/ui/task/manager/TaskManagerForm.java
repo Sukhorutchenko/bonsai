@@ -1,6 +1,6 @@
 package com.company.bonsai.ui.task.manager;
 
-import com.company.bonsai.task.Task;
+import com.company.bonsai.task.TaskConfiguration;
 
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
@@ -32,11 +32,11 @@ public class TaskManagerForm {
         initRemoveTaskButton();
         initConfigTaskButton();
 
-        //runTaskButton.addActionListener(e -> taskExecutor.execute(taskFactory.createTask()));
+        runTaskButton.addActionListener(e -> taskManager.runTask(getSelectedOrRoot()));
     }
 
     private void initTaskTree() {
-        taskTreeWidget.setModel(new TaskTreeModel(taskManager.getRootTask()));
+        taskTreeWidget.setModel(new TaskTreeModel(taskManager.getRootTaskConfiguration()));
         taskTreeWidget.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     }
 
@@ -61,12 +61,12 @@ public class TaskManagerForm {
         });
     }
 
-    private Task getSelectedOrRoot() {
-        Task task = (Task) taskTreeWidget.getLastSelectedPathComponent();
-        if (task == null) {
-            task = taskManager.getRootTask();
+    private TaskConfiguration getSelectedOrRoot() {
+        TaskConfiguration taskConfiguration = (TaskConfiguration) taskTreeWidget.getLastSelectedPathComponent();
+        if (taskConfiguration == null) {
+            taskConfiguration = taskManager.getRootTaskConfiguration();
         }
-        return task;
+        return taskConfiguration;
     }
 
 }

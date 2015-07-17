@@ -4,6 +4,8 @@ public interface TaskFactory {
 
     String NEW_TASK_NAME = "New task";
 
-    Task createTask(Task parent);
+    TaskConfiguration createTaskConfiguration(TaskConfiguration parent);
+
+    Task createTask(TaskConfiguration configuration);
 
 }

@@ -5,7 +5,7 @@ import com.company.bonsai.plugin.PluginContainer;
 import com.company.bonsai.script.ScriptContainer;
 import com.company.bonsai.task.TaskExecutor;
 import com.company.bonsai.task.TaskFactory;
-import com.company.bonsai.task.Task;
+import com.company.bonsai.task.TaskConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,18 +16,18 @@ public class SwingDesktopUI implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SwingDesktopUI.class);
     private PluginContainer pluginContainer;
     private ScriptContainer scriptContainer;
-    private Task rootTask;
+    private TaskConfiguration rootTaskConfiguration;
     private TaskFactory taskFactory;
     private TaskExecutor taskExecutor;
 
     public SwingDesktopUI(PluginContainer pluginContainer,
                           ScriptContainer scriptContainer,
-                          Task rootTask,
+                          TaskConfiguration rootTaskConfiguration,
                           TaskFactory taskFactory,
                           TaskExecutor taskExecutor) {
         this.pluginContainer = pluginContainer;
         this.scriptContainer = scriptContainer;
-        this.rootTask = rootTask;
+        this.rootTaskConfiguration = rootTaskConfiguration;
         this.taskFactory = taskFactory;
         this.taskExecutor = taskExecutor;
     }
@@ -39,7 +39,7 @@ public class SwingDesktopUI implements Runnable {
         } catch (Exception e) {
             LOG.error("Failed to set system look and feel to UI");
         }
-        new TaskManager(rootTask, taskFactory, scriptContainer).showFrame();
+        new TaskManager(rootTaskConfiguration, taskFactory, taskExecutor, scriptContainer).showFrame();
     }
 
 }

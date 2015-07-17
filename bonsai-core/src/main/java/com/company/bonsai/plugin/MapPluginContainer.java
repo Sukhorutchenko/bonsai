@@ -2,14 +2,15 @@ package com.company.bonsai.plugin;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapPluginContainer implements PluginContainer {
 
     private final Map<String /*pluginName*/, Plugin> plugins = new HashMap<>();
 
-    public MapPluginContainer() {
-        initPlugins(plugins);
+    public MapPluginContainer(FilePluginLoader pluginLoader) {
+        initPlugins(pluginLoader.loadAllPlugins());
     }
 
     @Override
@@ -21,9 +22,10 @@ public class MapPluginContainer implements PluginContainer {
         return plugins.values();
     }
 
-    private void initPlugins(Map<String, Plugin> plugins) {
-        Plugin stubPlugin = new StubPlugin("StubPlugin");
-        plugins.put(stubPlugin.getName(), stubPlugin);
+    private void initPlugins(List<Plugin> pluginList) {
+        for (Plugin plugin : pluginList) {
+            plugins.put(plugin.getName(), plugin);
+        }
     }
 
 }

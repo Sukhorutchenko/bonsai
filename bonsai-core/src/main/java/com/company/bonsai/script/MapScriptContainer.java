@@ -9,8 +9,8 @@ public class MapScriptContainer implements ScriptContainer {
 
     private final Map<String /*scriptName*/, Script> scripts = new HashMap<>();
 
-    public MapScriptContainer() {
-        initScripts(scripts);
+    public MapScriptContainer(FileScriptLoader scriptLoader) {
+        initScripts(scriptLoader.loadAllScripts());
     }
 
     @Override
@@ -23,9 +23,10 @@ public class MapScriptContainer implements ScriptContainer {
         return new ArrayList<>(scripts.values());
     }
 
-    private void initScripts(Map<String, Script> scripts) {
-        Script stubScript = new StubScript("StubScript");
-        scripts.put(stubScript.getName(), stubScript);
+    private void initScripts(List<Script> scriptList) {
+        for (Script script : scriptList) {
+            scripts.put(script.getName(), script);
+        }
     }
 
 }
