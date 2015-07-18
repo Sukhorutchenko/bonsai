@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.Reader;
 
 public class ScriptEngineTask implements Task {
 
@@ -23,7 +24,7 @@ public class ScriptEngineTask implements Task {
 
     @Override
     public TaskConfiguration getConfiguration() {
-        return null;
+        return configuration;
     }
 
     @Override
@@ -44,11 +45,32 @@ public class ScriptEngineTask implements Task {
 
     private void prepareResources(ScriptEngine engine) {
         injectPlugins(engine, pluginContainer);
+        injectLibs(engine, pluginContainer);
     }
 
     private void injectPlugins(ScriptEngine engine, PluginContainer pluginContainer) {
         for (Plugin plugin : pluginContainer.getPlugins()) {
-            engine.put(plugin.getName(), plugin.getFacade());
+            try {
+                Object facade = plugin.getFacade();
+                if (facade != null) {
+                    engine.put(plugin.getName(), facade);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void injectLibs(ScriptEngine engine, PluginContainer pluginContainer) {
+        for (Plugin plugin : pluginContainer.getPlugins()) {
+            try {
+                Reader lib = plugin.getLib();
+                if (lib != null) {
+                    engine.eval(lib);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
