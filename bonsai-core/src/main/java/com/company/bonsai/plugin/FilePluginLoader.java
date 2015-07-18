@@ -25,7 +25,7 @@ public class FilePluginLoader {
 
     public List<Plugin> loadAllPlugins() {
         List<Plugin> plugins = new ArrayList<>();
-        File[] pluginJarFiles = pluginsDirectory.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
+        File[] pluginJarFiles = pluginsDirectory.listFiles(file -> file.isFile() && file.getName().endsWith(Plugin.PLUGIN_EXTENSION));
         List<Class> pluginClasses = loadPluginClasses(pluginJarFiles);
         for (Class clazz : pluginClasses) {
             try {
