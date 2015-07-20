@@ -8,8 +8,8 @@ public interface Plugin {
 
     String getName();
 
-    Object getFacade() throws Exception;
+    Object getFacade();
 
-    Reader getLib() throws Exception;
+    Reader getLib();
 
 }
