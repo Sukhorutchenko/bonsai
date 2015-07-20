@@ -12,4 +12,6 @@ public interface Plugin {
 
     Reader getLib();
 
+    PluginConfiguration getConfiguration();
+
 }

@@ -20,8 +20,12 @@ public abstract class RegularPlugin implements Plugin {
         return null;
     }
 
-
     public String getLibFileName() {
+        return null;
+    }
+
+    @Override
+    public PluginConfiguration getConfiguration() {
         return null;
     }
 
