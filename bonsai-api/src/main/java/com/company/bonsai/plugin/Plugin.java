@@ -1,5 +1,8 @@
 package com.company.bonsai.plugin;
 
+import com.company.bonsai.plugin.config.ConfigurationFieldFactory;
+import com.company.bonsai.plugin.config.PluginConfiguration;
+
 import java.io.Reader;
 
 public interface Plugin {
@@ -12,6 +15,6 @@ public interface Plugin {
 
     Reader getLib();
 
-    PluginConfiguration getConfiguration();
+    PluginConfiguration getConfiguration(ConfigurationFieldFactory fieldFactory);
 
 }

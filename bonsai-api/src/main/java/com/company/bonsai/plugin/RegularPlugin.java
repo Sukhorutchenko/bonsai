@@ -1,5 +1,8 @@
 package com.company.bonsai.plugin;
 
+import com.company.bonsai.plugin.config.ConfigurationFieldFactory;
+import com.company.bonsai.plugin.config.PluginConfiguration;
+
 import java.io.InputStreamReader;
 import java.io.Reader;
 
@@ -25,7 +28,7 @@ public abstract class RegularPlugin implements Plugin {
     }
 
     @Override
-    public PluginConfiguration getConfiguration() {
+    public PluginConfiguration getConfiguration(ConfigurationFieldFactory fieldFactory) {
         return null;
     }
 
