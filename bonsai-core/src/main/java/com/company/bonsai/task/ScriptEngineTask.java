@@ -9,6 +9,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ScriptEngineTask implements Task {
 
@@ -46,6 +50,7 @@ public class ScriptEngineTask implements Task {
     private void prepareResources(ScriptEngine engine) {
         injectPlugins(engine, pluginContainer);
         injectLibs(engine, pluginContainer);
+        injectConfiguration(engine, configuration);
     }
 
     private void injectPlugins(ScriptEngine engine, PluginContainer pluginContainer) {
@@ -73,5 +78,31 @@ public class ScriptEngineTask implements Task {
             }
         }
     }
+
+    private void injectConfiguration(ScriptEngine engine, TaskConfiguration configuration) {
+        engine.put("args", parseArgsToArray(configuration.getArgsLine()));
+        engine.put("argument", parseArgsToFields(configuration.getArgsLine()));
+    }
+
+    private String[] parseArgsToArray(String argsLine) {
+        return argsLine.split("\\s+");
+    }
+
+    private Map<String, String> parseArgsToFields(String argsLine) {
+        Map<String, String> args = new HashMap<>();
+        List<String> words = Arrays.asList(argsLine.split("\\s+"));
+        for (String word : words) {
+            if (word.contains(ARGUMENT_EQUAL)) {
+                String name = word.substring(0, word.indexOf(ARGUMENT_EQUAL));
+                String value = word.substring(word.indexOf(ARGUMENT_EQUAL) + 1);
+                args.put(name, value);
+            } else {
+                args.put(word, word);
+            }
+        }
+        return args;
+    }
+
+
 
 }

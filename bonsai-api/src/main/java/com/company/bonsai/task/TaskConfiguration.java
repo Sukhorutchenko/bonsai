@@ -18,6 +18,9 @@ public interface TaskConfiguration extends Serializable {
     Script getScript();
     void setScript(Script script);
 
+    String getArgsLine();
+    void setArgsLine(String argsLine);
+
     long getDelay();
     void setDelay(long delay);
 
