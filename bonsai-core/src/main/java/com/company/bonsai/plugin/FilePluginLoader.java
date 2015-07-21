@@ -1,14 +1,17 @@
 package com.company.bonsai.plugin;
 
+import org.reflections.Reflections;
+import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class FilePluginLoader {
 
@@ -23,40 +26,30 @@ public class FilePluginLoader {
         this.pluginsDirectory = pluginsDirectory;
     }
 
-    public List<Plugin> loadAllPlugins() {
-        List<Plugin> plugins = new ArrayList<>();
-        File[] pluginJarFiles = pluginsDirectory.listFiles(file -> file.isFile() && file.getName().endsWith(Plugin.PLUGIN_EXTENSION));
-        List<Class> pluginClasses = loadPluginClasses(pluginJarFiles);
-        for (Class clazz : pluginClasses) {
-            try {
-                Plugin plugin = (Plugin) clazz.newInstance();
-                plugins.add(plugin);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        return plugins;
-    }
-
-    private List<Class> loadPluginClasses(File[] pluginJarFiles) {
+    public List<Class> loadPluginClasses() {
         List<Class> pluginClasses = new ArrayList<>();
-        for(File pluginJarFile : pluginJarFiles) {
-            try {
-                URL jarURL = pluginJarFile.toURI().toURL();
-                JarClassLoader classLoader = new JarClassLoader(jarURL);
-                Class clazz = classLoader.loadClass(classLoader.getMainClassName());
-                pluginClasses.add(clazz);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for (File pluginJar : getPluginsJars()) {
+            pluginClasses.addAll(getPluginAnnotatedClasses(pluginJar));
         }
         return pluginClasses;
+    }
+
+    private File[] getPluginsJars() {
+        return pluginsDirectory.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
+    }
+
+    private Set<Class<?>> getPluginAnnotatedClasses(File pluginJar) {
+        URL jarURL = null;
+        try {
+            jarURL = pluginJar.toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        URLClassLoader classLoader = new URLClassLoader(new URL[] { jarURL }, getClass().getClassLoader());
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .addClassLoader(classLoader)
+                .setUrls(classLoader.getURLs()));
+        return reflections.getTypesAnnotatedWith(Plugin.class);
     }
 
 }
