@@ -20,8 +20,8 @@
         <module>bonsai-api</module>
         <module>bonsai-core</module>
         <module>bonsai-desktopUI</module>
-        <module>bonsai-plugin-libs</module>
         <module>bonsai-desktop</module>
+        <module>bonsai-plugin-example</module>
     </modules>
 
     <dependencies>

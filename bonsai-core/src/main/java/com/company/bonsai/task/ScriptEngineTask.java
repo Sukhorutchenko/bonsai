@@ -1,6 +1,6 @@
 package com.company.bonsai.task;
 
-import com.company.bonsai.plugin.Plugin;
+import com.company.bonsai.plugin.EvaluateResource;
 import com.company.bonsai.plugin.PluginContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,32 +51,33 @@ public class ScriptEngineTask implements Task {
 
     private void prepareResources(ScriptEngine engine) {
         injectPlugins(engine, pluginContainer);
-        injectLibs(engine, pluginContainer);
         injectConfiguration(engine, configuration);
     }
 
     private void injectPlugins(ScriptEngine engine, PluginContainer pluginContainer) {
-        for (Plugin plugin : pluginContainer.getPlugins()) {
+        for (Map.Entry<String, Class> pluginEntry : pluginContainer.getPlugins().entrySet()) {
+            evaluateResources(engine, pluginEntry.getValue());
             try {
-                Object facade = plugin.getFacade();
-                if (facade != null) {
-                    engine.put(plugin.getName(), facade);
-                }
-            } catch (Exception e) {
+                engine.put(pluginEntry.getKey(), pluginEntry.getValue().newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void injectLibs(ScriptEngine engine, PluginContainer pluginContainer) {
-        for (Plugin plugin : pluginContainer.getPlugins()) {
-            try {
-                Reader lib = plugin.getLib();
-                if (lib != null) {
-                    engine.eval(lib);
+    private void evaluateResources(ScriptEngine engine, Class pluginClass) {
+        Annotation annotation = pluginClass.getAnnotation(EvaluateResource.class);
+        if (annotation != null) {
+            ClassLoader classLoader = pluginClass.getClassLoader();
+            for (String resourcePath : ((EvaluateResource) annotation).value()) {
+                Reader resource = new InputStreamReader(classLoader.getResourceAsStream(resourcePath));
+                try {
+                    engine.eval(resource);
+                } catch (ScriptException e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
@@ -102,7 +105,5 @@ public class ScriptEngineTask implements Task {
         }
         return args;
     }
-
-
 
 }

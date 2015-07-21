@@ -1,0 +1,2 @@
+print(PluginName.sayHello());
+hello();

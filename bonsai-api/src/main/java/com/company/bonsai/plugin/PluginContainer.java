@@ -1,11 +1,11 @@
 package com.company.bonsai.plugin;
 
-import java.util.Collection;
+import java.util.Map;
 
 public interface PluginContainer {
 
-    Plugin getPluginByName(String name);
+    Class getPluginByName(String name);
 
-    Collection<Plugin> getPlugins();
+    Map<String, Class> getPlugins();
 
 }
