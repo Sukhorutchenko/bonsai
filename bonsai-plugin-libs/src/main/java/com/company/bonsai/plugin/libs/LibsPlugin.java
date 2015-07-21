@@ -1,5 +1,7 @@
 package com.company.bonsai.plugin.libs;
 
+import com.company.bonsai.plugin.config.ConfigurationFieldFactory;
+import com.company.bonsai.plugin.config.PluginConfiguration;
 import com.company.bonsai.plugin.RegularPlugin;
 
 public class LibsPlugin extends RegularPlugin {
@@ -20,6 +22,11 @@ public class LibsPlugin extends RegularPlugin {
     @Override
     public String getLibFileName() {
         return LIB_FILE_NAME;
+    }
+
+    @Override
+    public PluginConfiguration getConfiguration(ConfigurationFieldFactory fieldFactory) {
+        return new LibsConfiguration();
     }
 
 }

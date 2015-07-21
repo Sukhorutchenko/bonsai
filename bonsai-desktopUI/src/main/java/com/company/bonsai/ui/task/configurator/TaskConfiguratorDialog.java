@@ -1,6 +1,7 @@
 package com.company.bonsai.ui.task.configurator;
 
 import com.company.bonsai.script.Script;
+import com.company.bonsai.script.ScriptContainer;
 import com.company.bonsai.task.TaskConfiguration;
 import com.company.bonsai.task.TaskFactory;
 import com.company.bonsai.ui.DialogResult;
@@ -27,6 +28,7 @@ public class TaskConfiguratorDialog extends JDialog {
     private JTextField taskNameField;
     private JSpinner taskDelaySpinner;
     private JComboBox taskScriptCombo;
+    private JTextField argsLineField;
 
     private final static String TASK_CONFIGURATOR_FRAME_TITLE_SUFFIX = " configuration";
     private TaskConfigurator taskConfigurator;
@@ -43,17 +45,12 @@ public class TaskConfiguratorDialog extends JDialog {
     }
 
     private void initWidgets() {
-        TaskConfiguration taskConfiguration = taskConfigurator.getTaskConfiguration();
-        taskNameField.setText(taskConfiguration.getName());
-        taskDelaySpinner.setValue((int) taskConfiguration.getDelay());
-        taskScriptCombo.setModel(new ScriptsComboModel(taskConfigurator.getScriptContainer()));
-        taskScriptCombo.setSelectedItem(taskConfigurator.getTaskConfiguration().getScript());
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        updateTaskConfigurationUI(taskConfigurator.getTaskConfiguration(), taskConfigurator.getScriptContainer());
 
         buttonOK.addActionListener(e -> onOK());
-
         buttonCancel.addActionListener(e -> onCancel());
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
@@ -65,7 +62,7 @@ public class TaskConfiguratorDialog extends JDialog {
     }
 
     private void onOK() {
-        submitTaskConfiguration();
+        submitTaskConfiguration(taskConfigurator.getTaskConfiguration());
         taskConfigurator.setDialogResult(DialogResult.OK);
         dispose();
     }
@@ -75,17 +72,24 @@ public class TaskConfiguratorDialog extends JDialog {
         dispose();
     }
 
-    private void submitTaskConfiguration() {
+    private void updateTaskConfigurationUI(TaskConfiguration taskConfiguration, ScriptContainer scriptContainer) {
+        taskNameField.setText(taskConfiguration.getName());
+        taskDelaySpinner.setValue((int) taskConfiguration.getDelay());
+        taskScriptCombo.setModel(new ScriptsComboModel(scriptContainer));
+        taskScriptCombo.setSelectedItem(taskConfiguration.getScript());
+        argsLineField.setText(taskConfiguration.getArgsLine());
+    }
+
+    private void submitTaskConfiguration(TaskConfiguration taskConfiguration) {
         String name = taskNameField.getText();
         if (StringUtils.isEmpty(name)) {
             name = TaskFactory.NEW_TASK_NAME;
         }
-        taskConfigurator.getTaskConfiguration().setName(name);
-
-        taskConfigurator.getTaskConfiguration().setScript((Script) taskScriptCombo.getSelectedItem());
-
+        taskConfiguration.setName(name);
+        taskConfiguration.setScript((Script) taskScriptCombo.getSelectedItem());
+        taskConfiguration.setArgsLine(argsLineField.getText());
         long delay = (int) taskDelaySpinner.getValue();
-        taskConfigurator.getTaskConfiguration().setDelay(delay);
+        taskConfiguration.setDelay(delay);
     }
 
 }

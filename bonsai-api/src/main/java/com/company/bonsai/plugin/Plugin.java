@@ -1,5 +1,8 @@
 package com.company.bonsai.plugin;
 
+import com.company.bonsai.plugin.config.ConfigurationFieldFactory;
+import com.company.bonsai.plugin.config.PluginConfiguration;
+
 import java.io.Reader;
 
 public interface Plugin {
@@ -8,8 +11,10 @@ public interface Plugin {
 
     String getName();
 
-    Object getFacade() throws Exception;
+    Object getFacade();
 
-    Reader getLib() throws Exception;
+    Reader getLib();
+
+    PluginConfiguration getConfiguration(ConfigurationFieldFactory fieldFactory);
 
 }

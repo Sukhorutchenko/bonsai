@@ -14,6 +14,7 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     private final List<TaskConfiguration> children = new ArrayList<>();
     private String name;
     private Script script;
+    private String argsLine;
     private long delay;
 
     /**
@@ -61,7 +62,7 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     public Script getScript() {
         if (script != null) {
             return script;
-        } else if (parent != null){
+        } else if (parent != null) {
             return parent.getScript();
         }
         return null;
@@ -70,6 +71,21 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     @Override
     public void setScript(Script script) {
         this.script = script;
+    }
+
+    @Override
+    public String getArgsLine() {
+        if (argsLine != null) {
+            return argsLine;
+        } else if (parent != null) {
+            return parent.getArgsLine();
+        }
+        return null;
+    }
+
+    @Override
+    public void setArgsLine(String argsLine) {
+        this.argsLine = argsLine;
     }
 
     @Override
