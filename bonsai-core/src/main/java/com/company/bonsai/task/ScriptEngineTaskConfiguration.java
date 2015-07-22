@@ -106,6 +106,16 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     }
 
     @Override
+    public Object getPluginConfiguration(Class pluginConfigurationClass) {
+        return pluginConfigurations.get(pluginConfigurationClass);
+    }
+
+    @Override
+    public void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration) {
+        pluginConfigurations.put(pluginConfigurationClass, pluginConfiguration);
+    }
+
+    @Override
     public String toString() {
         return name;
     }

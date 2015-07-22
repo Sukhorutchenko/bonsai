@@ -24,6 +24,9 @@ public interface TaskConfiguration extends Serializable {
 
     Map<Class /*pluginConfigurationClass*/, Object> getPluginConfigurations();
 
+    Object getPluginConfiguration(Class pluginConfigurationClass);
+    void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration);
+
     long getDelay();
     void setDelay(long delay);
 

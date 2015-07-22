@@ -10,32 +10,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PluginConfigurationPanel {
+
     private JPanel contentPane;
     private int panelHeight = 50;
     private int comCount = 0;
 
-    Map<String /*fieldName*/, JTextField> textFieldsMap;
-    private Class pluginConfigurationClass;
+    Map<String /*fieldName*/, JTextField> textFieldsMap = new HashMap<>();
+    private Object pluginConfiguration;
 
-    public PluginConfigurationPanel(Class pluginConfigurationClass) {
-        this.pluginConfigurationClass = pluginConfigurationClass;
+    public PluginConfigurationPanel(Object pluginConfiguration) {
+        this.pluginConfiguration = pluginConfiguration;
         contentPane.setLayout(null);
-        initFields(pluginConfigurationClass);
+        initWidgets();
     }
 
     public JPanel getContentPane() {
         return contentPane;
     }
 
-    private void initFields(Class pluginConfigurationClass) {
-        textFieldsMap = new HashMap<>();
-        for (Field field : pluginConfigurationClass.getDeclaredFields()) {
+    private void initWidgets() {
+        for (Field field : pluginConfiguration.getClass().getDeclaredFields()) {
             if (field.getAnnotation(TextField.class) != null) {
+
+                boolean wasAccessible = field.isAccessible();
+                field.setAccessible(true);
+                String textFieldValue = null;
+                try {
+                     textFieldValue = (String) field.get(pluginConfiguration);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                field.setAccessible(wasAccessible);
+
                 JPanel panel = getPanel();
                 JLabel label = new JLabel(field.getName());
                 label.setBounds(0, 10, 400, 10);
                 panel.add(label);
                 JTextField textField = new JTextField();
+                textField.setText(textFieldValue);
                 textField.setBounds(0, 25, 350, 20);
                 panel.add(textField);
                 textFieldsMap.put(field.getName(), textField);
@@ -53,21 +65,13 @@ public class PluginConfigurationPanel {
         return panel;
     }
 
-    public Object getConfiguration() {
-        Object configuration = null;
-        try {
-            configuration = pluginConfigurationClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    public void submitPluginConfiguration() {
         for (Map.Entry<String, JTextField> entry : textFieldsMap.entrySet()) {
             try {
-                Field field = configuration.getClass().getDeclaredField(entry.getKey());
+                Field field = pluginConfiguration.getClass().getDeclaredField(entry.getKey());
                 boolean wasAccessible = field.isAccessible();
                 field.setAccessible(true);
-                field.set(configuration, entry.getValue().getText());
+                field.set(pluginConfiguration, entry.getValue().getText());
                 field.setAccessible(wasAccessible);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
@@ -75,6 +79,5 @@ public class PluginConfigurationPanel {
                 e.printStackTrace();
             }
         }
-        return configuration;
     }
 }

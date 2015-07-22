@@ -21,10 +21,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class TaskConfiguratorDialog extends JDialog {
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -36,7 +38,7 @@ public class TaskConfiguratorDialog extends JDialog {
 
     private final static String TASK_CONFIGURATOR_FRAME_TITLE_SUFFIX = " configuration";
     private TaskConfigurator taskConfigurator;
-    private Map<Class /*ConfigClass*/, PluginConfigurationPanel> pluginsConfigPanels = new HashMap<>();
+    private List<PluginConfigurationPanel> pluginsConfigPanels = new ArrayList<>();
 
     public TaskConfiguratorDialog(TaskConfigurator taskConfigurator) {
         this.taskConfigurator = taskConfigurator;
@@ -56,12 +58,29 @@ public class TaskConfiguratorDialog extends JDialog {
             Class pluginClass = plugin.getValue();
             for (Field field : pluginClass.getDeclaredFields()) {
                 if (field.getAnnotation(Configuration.class) != null) {
-                    PluginConfigurationPanel configPanel = new PluginConfigurationPanel(field.getType());
+                    Object pluginConfig = obtainPluginConfiguration(field.getType());
+                    PluginConfigurationPanel configPanel = new PluginConfigurationPanel(pluginConfig);
+                    pluginsConfigPanels.add(configPanel);
                     tabPanel.addTab(plugin.getKey(), configPanel.getContentPane());
-                    pluginsConfigPanels.put(field.getType(), configPanel);
                 }
             }
         }
+    }
+
+    private Object obtainPluginConfiguration(Class configClass) {
+        Object pluginConfiguration = taskConfigurator.getTaskConfiguration().getPluginConfiguration(configClass);
+        if (pluginConfiguration != null) {
+            return pluginConfiguration;
+        }
+        try {
+            pluginConfiguration = configClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        taskConfigurator.getTaskConfiguration().setPluginConfiguration(configClass, pluginConfiguration);
+        return pluginConfiguration;
     }
 
     private void initWidgets() {
@@ -111,10 +130,8 @@ public class TaskConfiguratorDialog extends JDialog {
         long delay = (int) taskDelaySpinner.getValue();
         taskConfiguration.setDelay(delay);
 
-        //add plugins configs
-        for (Map.Entry<Class, PluginConfigurationPanel> entry : pluginsConfigPanels.entrySet()) {
-            taskConfiguration.getPluginConfigurations().put(entry.getKey(), entry.getValue().getConfiguration());
-        }
+        //submit all plugins
+        pluginsConfigPanels.forEach(com.company.bonsai.ui.task.configurator.PluginConfigurationPanel::submitPluginConfiguration);
     }
 
 }
