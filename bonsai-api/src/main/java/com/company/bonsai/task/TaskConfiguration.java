@@ -22,8 +22,6 @@ public interface TaskConfiguration extends Serializable {
     String getArgsLine();
     void setArgsLine(String argsLine);
 
-    Map<Class /*pluginConfigurationClass*/, Object> getPluginConfigurations();
-
     Object getPluginConfiguration(Class pluginConfigurationClass);
     void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration);
 

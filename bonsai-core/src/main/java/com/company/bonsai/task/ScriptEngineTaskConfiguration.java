@@ -101,10 +101,6 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
         this.delay = delay;
     }
 
-    public Map<Class, Object> getPluginConfigurations() {
-        return pluginConfigurations;
-    }
-
     @Override
     public Object getPluginConfiguration(Class pluginConfigurationClass) {
         return pluginConfigurations.get(pluginConfigurationClass);

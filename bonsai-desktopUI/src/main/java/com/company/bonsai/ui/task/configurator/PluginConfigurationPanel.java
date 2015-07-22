@@ -28,43 +28,6 @@ public class PluginConfigurationPanel {
         return contentPane;
     }
 
-    private void initWidgets() {
-        for (Field field : pluginConfiguration.getClass().getDeclaredFields()) {
-            if (field.getAnnotation(TextField.class) != null) {
-
-                boolean wasAccessible = field.isAccessible();
-                field.setAccessible(true);
-                String textFieldValue = null;
-                try {
-                     textFieldValue = (String) field.get(pluginConfiguration);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                field.setAccessible(wasAccessible);
-
-                JPanel panel = getPanel();
-                JLabel label = new JLabel(field.getName());
-                label.setBounds(0, 10, 400, 10);
-                panel.add(label);
-                JTextField textField = new JTextField();
-                textField.setText(textFieldValue);
-                textField.setBounds(0, 25, 350, 20);
-                panel.add(textField);
-                textFieldsMap.put(field.getName(), textField);
-            }
-        }
-        contentPane.updateUI();
-    }
-
-    private JPanel getPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(10, comCount * panelHeight, 500, panelHeight);
-        comCount++;
-        contentPane.add(panel);
-        return panel;
-    }
-
     public void submitPluginConfiguration() {
         for (Map.Entry<String, JTextField> entry : textFieldsMap.entrySet()) {
             try {
@@ -80,4 +43,42 @@ public class PluginConfigurationPanel {
             }
         }
     }
+
+    private void initWidgets() {
+        for (Field field : pluginConfiguration.getClass().getDeclaredFields()) {
+            if (field.getAnnotation(TextField.class) != null) {
+
+                boolean wasAccessible = field.isAccessible();
+                field.setAccessible(true);
+                String textFieldValue = null;
+                try {
+                     textFieldValue = (String) field.get(pluginConfiguration);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                field.setAccessible(wasAccessible);
+
+                JPanel panel = createPanel();
+                JLabel label = new JLabel(field.getName());
+                label.setBounds(0, 10, 400, 10);
+                panel.add(label);
+                JTextField textField = new JTextField();
+                textField.setText(textFieldValue);
+                textField.setBounds(0, 25, 350, 20);
+                panel.add(textField);
+                textFieldsMap.put(field.getName(), textField);
+            }
+        }
+        contentPane.updateUI();
+    }
+
+    private JPanel createPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(10, comCount * panelHeight, 500, panelHeight);
+        comCount++;
+        contentPane.add(panel);
+        return panel;
+    }
+
 }
