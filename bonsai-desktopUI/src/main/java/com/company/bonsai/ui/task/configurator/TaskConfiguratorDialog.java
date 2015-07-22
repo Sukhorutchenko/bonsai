@@ -1,5 +1,6 @@
 package com.company.bonsai.ui.task.configurator;
 
+import com.company.bonsai.plugin.Configuration;
 import com.company.bonsai.script.Script;
 import com.company.bonsai.script.ScriptContainer;
 import com.company.bonsai.task.TaskConfiguration;
@@ -19,12 +20,17 @@ import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class TaskConfiguratorDialog extends JDialog {
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabPanel;
     private JTextField taskNameField;
     private JSpinner taskDelaySpinner;
     private JComboBox taskScriptCombo;
@@ -32,16 +38,49 @@ public class TaskConfiguratorDialog extends JDialog {
 
     private final static String TASK_CONFIGURATOR_FRAME_TITLE_SUFFIX = " configuration";
     private TaskConfigurator taskConfigurator;
+    private List<PluginConfigurationPanel> pluginsConfigPanels = new ArrayList<>();
 
     public TaskConfiguratorDialog(TaskConfigurator taskConfigurator) {
         this.taskConfigurator = taskConfigurator;
         setTitle(taskConfigurator.getTaskConfiguration().getName() + TASK_CONFIGURATOR_FRAME_TITLE_SUFFIX);
         setContentPane(contentPane);
+        initPluginTabs();
         initWidgets();
         pack();
         setModal(true);
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(buttonOK);
+    }
+
+    private void initPluginTabs() {
+        Map<String, Class> plugins = taskConfigurator.getPluginContainer().getPlugins();
+        for (Map.Entry<String, Class> plugin : plugins.entrySet()) {
+            Class pluginClass = plugin.getValue();
+            for (Field field : pluginClass.getDeclaredFields()) {
+                if (field.getAnnotation(Configuration.class) != null) {
+                    Object pluginConfig = obtainPluginConfiguration(field.getType());
+                    PluginConfigurationPanel configPanel = new PluginConfigurationPanel(pluginConfig);
+                    pluginsConfigPanels.add(configPanel);
+                    tabPanel.addTab(plugin.getKey(), configPanel.getContentPane());
+                }
+            }
+        }
+    }
+
+    private Object obtainPluginConfiguration(Class configClass) {
+        Object pluginConfiguration = taskConfigurator.getTaskConfiguration().getPluginConfiguration(configClass);
+        if (pluginConfiguration != null) {
+            return pluginConfiguration;
+        }
+        try {
+            pluginConfiguration = configClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        taskConfigurator.getTaskConfiguration().setPluginConfiguration(configClass, pluginConfiguration);
+        return pluginConfiguration;
     }
 
     private void initWidgets() {
@@ -90,6 +129,9 @@ public class TaskConfiguratorDialog extends JDialog {
         taskConfiguration.setArgsLine(argsLineField.getText());
         long delay = (int) taskDelaySpinner.getValue();
         taskConfiguration.setDelay(delay);
+
+        //submit all plugins
+        pluginsConfigPanels.forEach(com.company.bonsai.ui.task.configurator.PluginConfigurationPanel::submitPluginConfiguration);
     }
 
 }

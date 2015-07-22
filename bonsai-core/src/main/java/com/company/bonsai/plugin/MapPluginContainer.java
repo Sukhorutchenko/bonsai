@@ -31,7 +31,7 @@ public class MapPluginContainer implements PluginContainer {
     }
 
     private String getPluginName(Class pluginClass) {
-        return ((Plugin) pluginClass.getAnnotation(Plugin.class)).value();
+        return ((Plugin) pluginClass.getAnnotation(Plugin.class)).name();
     }
 
 }

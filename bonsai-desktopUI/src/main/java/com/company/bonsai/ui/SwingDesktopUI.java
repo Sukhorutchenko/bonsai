@@ -39,7 +39,7 @@ public class SwingDesktopUI implements Runnable {
         } catch (Exception e) {
             LOG.error("Failed to set system look and feel to UI");
         }
-        new TaskManager(rootTaskConfiguration, taskFactory, taskExecutor, scriptContainer).showFrame();
+        new TaskManager(rootTaskConfiguration, taskFactory, taskExecutor, scriptContainer, pluginContainer).showFrame();
     }
 
 }

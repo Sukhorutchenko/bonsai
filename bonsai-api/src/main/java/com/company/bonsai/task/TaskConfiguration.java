@@ -4,6 +4,7 @@ import com.company.bonsai.script.Script;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskConfiguration extends Serializable {
 
@@ -20,6 +21,9 @@ public interface TaskConfiguration extends Serializable {
 
     String getArgsLine();
     void setArgsLine(String argsLine);
+
+    Object getPluginConfiguration(Class pluginConfigurationClass);
+    void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration);
 
     long getDelay();
     void setDelay(long delay);

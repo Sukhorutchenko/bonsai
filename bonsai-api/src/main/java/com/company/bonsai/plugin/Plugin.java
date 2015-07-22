@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Plugin {
 
-    String value();
+    String name();
+
+    String[] libs() default {};
 
 }

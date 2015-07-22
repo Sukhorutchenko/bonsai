@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScriptEngineTaskConfiguration implements TaskConfiguration {
 
@@ -16,6 +18,7 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     private Script script;
     private String argsLine;
     private long delay;
+    private final Map<Class, Object> pluginConfigurations = new HashMap<>();
 
     /**
      * Constructor for root element
@@ -96,6 +99,16 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     @Override
     public void setDelay(long delay) {
         this.delay = delay;
+    }
+
+    @Override
+    public Object getPluginConfiguration(Class pluginConfigurationClass) {
+        return pluginConfigurations.get(pluginConfigurationClass);
+    }
+
+    @Override
+    public void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration) {
+        pluginConfigurations.put(pluginConfigurationClass, pluginConfiguration);
     }
 
     @Override
