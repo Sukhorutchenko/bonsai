@@ -13,8 +13,4 @@ public @interface Plugin {
 
     String[] libs() default {};
 
-    Class configuration() default NoConfiguration.class;
-
-    final class NoConfiguration {}
-
 }

@@ -1,3 +1,3 @@
 function hello() {
-    print('this message sent by lib: ' + PluginName.sayHello());
+    print('this message sent by lib: ' + PluginExample.sayHello());
 }
