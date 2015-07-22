@@ -1,6 +1,6 @@
 package com.company.bonsai.task;
 
-import com.company.bonsai.plugin.EvaluateResource;
+import com.company.bonsai.plugin.Plugin;
 import com.company.bonsai.plugin.PluginContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +68,11 @@ public class ScriptEngineTask implements Task {
     }
 
     private void evaluateResources(ScriptEngine engine, Class pluginClass) {
-        Annotation annotation = pluginClass.getAnnotation(EvaluateResource.class);
-        if (annotation != null) {
+        Annotation annotation = pluginClass.getAnnotation(Plugin.class);
+        Plugin pluginAnnotation = (Plugin) annotation;
+        if (pluginAnnotation != null && pluginAnnotation.libs().length > 0) {
             ClassLoader classLoader = pluginClass.getClassLoader();
-            for (String resourcePath : ((EvaluateResource) annotation).value()) {
+            for (String resourcePath : pluginAnnotation.libs()) {
                 Reader resource = new InputStreamReader(classLoader.getResourceAsStream(resourcePath));
                 try {
                     engine.eval(resource);

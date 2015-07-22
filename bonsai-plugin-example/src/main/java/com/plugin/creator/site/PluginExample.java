@@ -1,12 +1,10 @@
 package com.plugin.creator.site;
 
 import com.company.bonsai.plugin.Inject;
-import com.company.bonsai.plugin.EvaluateResource;
 import com.company.bonsai.plugin.Plugin;
 import com.company.bonsai.task.TaskConfiguration;
 
-@Plugin("PluginName")
-@EvaluateResource("lib.js")
+@Plugin(name = "PluginName", configuration = ConfigExample.class, libs = "lib.js")
 public class PluginExample {
 
     @Inject
