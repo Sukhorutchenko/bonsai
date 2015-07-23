@@ -127,7 +127,7 @@ public class ScriptEngineTask implements Task {
                 try {
                     engine.eval(resource);
                 } catch (ScriptException e) {
-                    e.printStackTrace();
+                    LOG.error("Exception during script evaluation", e);
                 }
             }
         }

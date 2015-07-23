@@ -45,12 +45,28 @@
         </encoder>
     </appender>
 
+    <appender name="SCRIPT-ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>system/logs/script-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>system/logs/script-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative %d{HH:mm:ss} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <logger name="org.springframework" level="ERROR" additivity="false">
         <appender-ref ref="SPRING-ROLLING-FILE" />
     </logger>
 
     <logger name="com.company.bonsai" level="DEBUG" additivity="false">
         <appender-ref ref="BONSAI-ROLLING-FILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="com.company.bonsai.task.ScriptEngineTask" level="ERROR" additivity="false">
+        <appender-ref ref="SCRIPT-ROLLING-FILE" />
         <appender-ref ref="STDOUT" />
     </logger>
 
