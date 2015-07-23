@@ -4,6 +4,7 @@ import com.company.bonsai.plugin.Configuration;
 import com.company.bonsai.plugin.Inject;
 import com.company.bonsai.plugin.Plugin;
 import com.company.bonsai.plugin.PluginContainer;
+import com.company.bonsai.script.ScriptContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +25,13 @@ public class ScriptEngineTask implements Task {
     private static final Logger LOG = LoggerFactory.getLogger(ScriptEngineTask.class);
     private static final String NASHORN_ENGINE_NAME = "nashorn";
     private PluginContainer pluginContainer;
+    private ScriptContainer scriptContainer;
     private TaskConfiguration taskConfiguration;
 
-    public ScriptEngineTask(TaskConfiguration taskConfiguration, PluginContainer pluginContainer) {
+    public ScriptEngineTask(TaskConfiguration taskConfiguration, ScriptContainer scriptContainer, PluginContainer pluginContainer) {
         this.taskConfiguration = taskConfiguration;
         this.pluginContainer = pluginContainer;
+        this.scriptContainer = scriptContainer;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class ScriptEngineTask implements Task {
         ScriptEngine engine = createEngine();
         prepareResources(engine);
         try {
-            engine.eval(taskConfiguration.getScript().getScriptBody());
+            engine.eval(scriptContainer.getScriptByName(taskConfiguration.getScriptName()).getScriptBody());
         } catch (ScriptException e) {
             LOG.error("Script failed", e);
         }

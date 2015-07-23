@@ -115,7 +115,7 @@ public class TaskConfiguratorDialog extends JDialog {
         taskNameField.setText(taskConfiguration.getName());
         taskDelaySpinner.setValue((int) taskConfiguration.getDelay());
         taskScriptCombo.setModel(new ScriptsComboModel(scriptContainer));
-        taskScriptCombo.setSelectedItem(taskConfiguration.getScript());
+        taskScriptCombo.setSelectedItem(scriptContainer.getScriptByName(taskConfiguration.getScriptName()));
         argsLineField.setText(taskConfiguration.getArgsLine());
     }
 
@@ -125,7 +125,10 @@ public class TaskConfiguratorDialog extends JDialog {
             name = TaskFactory.NEW_TASK_NAME;
         }
         taskConfiguration.setName(name);
-        taskConfiguration.setScript((Script) taskScriptCombo.getSelectedItem());
+        Script selectedScript = (Script) taskScriptCombo.getSelectedItem();
+        if (selectedScript != null) {
+            taskConfiguration.setScriptName(selectedScript.getName());
+        }
         taskConfiguration.setArgsLine(argsLineField.getText());
         long delay = (int) taskDelaySpinner.getValue();
         taskConfiguration.setDelay(delay);

@@ -36,7 +36,7 @@ public class TaskManagerForm {
     }
 
     private void initTaskTree() {
-        taskTreeWidget.setModel(new TaskTreeModel(taskManager.getRootTaskConfiguration()));
+        taskTreeWidget.setModel(new TaskTreeModel(taskManager.getTaskConfigurationTree().getRootTaskConfiguration()));
         taskTreeWidget.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     }
 
@@ -64,7 +64,7 @@ public class TaskManagerForm {
     private TaskConfiguration getSelectedOrRoot() {
         TaskConfiguration taskConfiguration = (TaskConfiguration) taskTreeWidget.getLastSelectedPathComponent();
         if (taskConfiguration == null) {
-            taskConfiguration = taskManager.getRootTaskConfiguration();
+            taskConfiguration = taskManager.getTaskConfigurationTree().getRootTaskConfiguration();
         }
         return taskConfiguration;
     }

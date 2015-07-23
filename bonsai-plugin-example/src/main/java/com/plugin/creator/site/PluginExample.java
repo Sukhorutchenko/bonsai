@@ -3,6 +3,7 @@ package com.plugin.creator.site;
 import com.company.bonsai.plugin.Configuration;
 import com.company.bonsai.plugin.Inject;
 import com.company.bonsai.plugin.Plugin;
+import com.company.bonsai.task.Storage;
 import com.company.bonsai.task.TaskConfiguration;
 
 @Plugin(name = "PluginExample", libs = "lib.js")
@@ -10,6 +11,9 @@ public class PluginExample {
 
     @Inject
     private TaskConfiguration taskConfiguration;
+
+    @Inject
+    private Storage storage;
 
     @Configuration
     private ConfigExample configExample;

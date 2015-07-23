@@ -2,7 +2,9 @@ package com.plugin.creator.site;
 
 import com.company.bonsai.plugin.configuration.TextField;
 
-public class ConfigExample {
+import java.io.Serializable;
+
+public class ConfigExample implements Serializable {
 
     @TextField
     public String color;

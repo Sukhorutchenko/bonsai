@@ -1,21 +1,21 @@
 package com.company.bonsai.task;
 
-import com.company.bonsai.script.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScriptEngineTaskConfiguration implements TaskConfiguration {
+public class ScriptEngineTaskConfiguration implements TaskConfiguration, Serializable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ScriptEngineTaskConfiguration.class);
+    private transient static final Logger LOG = LoggerFactory.getLogger(ScriptEngineTaskConfiguration.class);
     private TaskConfiguration parent;
     private final List<TaskConfiguration> children = new ArrayList<>();
     private String name;
-    private Script script;
+    private String scriptName;
     private String argsLine;
     private long delay;
     private final Map<Class, Object> pluginConfigurations = new HashMap<>();
@@ -62,18 +62,18 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     }
 
     @Override
-    public Script getScript() {
-        if (script != null) {
-            return script;
+    public String getScriptName() {
+        if (scriptName != null) {
+            return scriptName;
         } else if (parent != null) {
-            return parent.getScript();
+            return parent.getScriptName();
         }
         return null;
     }
 
     @Override
-    public void setScript(Script script) {
-        this.script = script;
+    public void setScriptName(String scriptName) {
+        this.scriptName = scriptName;
     }
 
     @Override
@@ -89,6 +89,16 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration {
     @Override
     public void setArgsLine(String argsLine) {
         this.argsLine = argsLine;
+    }
+
+    @Override
+    public Storage getStorage() {
+        return null;
+    }
+
+    @Override
+    public void setStorage(Storage storage) {
+
     }
 
     @Override

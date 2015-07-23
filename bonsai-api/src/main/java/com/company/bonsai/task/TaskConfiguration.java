@@ -4,10 +4,10 @@ import com.company.bonsai.script.Script;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 public interface TaskConfiguration extends Serializable {
 
+    String ROOT_CONFIGURATION_NAME = "root";
     String getName();
     void setName(String name);
 
@@ -16,11 +16,14 @@ public interface TaskConfiguration extends Serializable {
 
     List<TaskConfiguration> getChildren();
 
-    Script getScript();
-    void setScript(Script script);
+    String getScriptName();
+    void setScriptName(String scriptName);
 
     String getArgsLine();
     void setArgsLine(String argsLine);
+
+    Storage getStorage();
+    void setStorage(Storage storage);
 
     Object getPluginConfiguration(Class pluginConfigurationClass);
     void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration);
