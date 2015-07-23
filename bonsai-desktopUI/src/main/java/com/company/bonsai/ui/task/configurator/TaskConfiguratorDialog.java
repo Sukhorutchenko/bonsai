@@ -57,7 +57,7 @@ public class TaskConfiguratorDialog extends JDialog {
         for (Map.Entry<String, Class> plugin : plugins.entrySet()) {
             Class pluginClass = plugin.getValue();
             for (Field field : pluginClass.getDeclaredFields()) {
-                if (field.getAnnotation(Configuration.class) != null) {
+                if (field.isAnnotationPresent(Configuration.class)) {
                     Object pluginConfig = obtainPluginConfiguration(field.getType());
                     PluginConfigurationPanel configPanel = new PluginConfigurationPanel(pluginConfig);
                     pluginsConfigPanels.add(configPanel);

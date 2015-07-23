@@ -78,12 +78,12 @@ public class ScriptEngineTask implements Task {
     private Object createPluginInstance(Class pluginClass) throws IllegalAccessException, InstantiationException {
         Object pluginInstance = pluginClass.newInstance();
         for (Field field : pluginClass.getDeclaredFields()) {
-            if (field.getAnnotation(Configuration.class) != null) {
+            if (field.isAnnotationPresent(Configuration.class)) {
                 Class configurationClass = field.getType();
                 Object pluginConfiguration = getPluginConfiguration(configurationClass);
                 setFieldValue(pluginInstance, field, pluginConfiguration);
             }
-            if (field.getAnnotation(Inject.class) != null) {
+            if (field.isAnnotationPresent(Inject.class)) {
                 Class requiredClass = field.getType();
                 Object environmentComponent = getEnvironmentComponent(requiredClass);
                 setFieldValue(pluginInstance, field, environmentComponent);
