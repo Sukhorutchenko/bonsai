@@ -20,6 +20,7 @@ public class FilePluginLoader {
 
     public FilePluginLoader(String pluginsDirectoryPath) {
         File pluginsDirectory =  new File(pluginsDirectoryPath);
+        pluginsDirectory.mkdirs();
         if (!pluginsDirectory.isDirectory()) {
             throw new IllegalArgumentException("argument must be a directory, not a file");
         }

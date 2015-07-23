@@ -4,6 +4,7 @@ import com.company.bonsai.plugin.PluginContainer;
 import com.company.bonsai.script.ScriptContainer;
 import com.company.bonsai.task.Task;
 import com.company.bonsai.task.TaskConfiguration;
+import com.company.bonsai.task.TaskConfigurationTree;
 import com.company.bonsai.task.TaskExecutor;
 import com.company.bonsai.task.TaskFactory;
 import com.company.bonsai.ui.DialogResult;
@@ -12,14 +13,14 @@ import com.company.bonsai.ui.task.configurator.TaskConfigurator;
 public class TaskManager {
 
     private final TaskManagerFrame frame;
-    private final TaskConfiguration rootTaskConfiguration;
+    private final TaskConfigurationTree taskConfigurationTree;
     private final TaskFactory taskFactory;
     private final TaskExecutor taskExecutor;
     private final ScriptContainer scriptContainer;
     private final PluginContainer pluginContainer;
 
-    public TaskManager(TaskConfiguration rootTaskConfiguration, TaskFactory taskFactory, TaskExecutor taskExecutor, ScriptContainer scriptContainer, PluginContainer pluginContainer) {
-        this.rootTaskConfiguration = rootTaskConfiguration;
+    public TaskManager(TaskConfigurationTree taskConfigurationTree, TaskFactory taskFactory, TaskExecutor taskExecutor, ScriptContainer scriptContainer, PluginContainer pluginContainer) {
+        this.taskConfigurationTree = taskConfigurationTree;
         this.taskFactory = taskFactory;
         this.taskExecutor = taskExecutor;
         this.scriptContainer = scriptContainer;
@@ -33,6 +34,7 @@ public class TaskManager {
         if (taskConfigurator.performDialog() == DialogResult.OK) {
             parent.getChildren().add(taskConfiguration);
         }
+        taskConfigurationTree.saveConfigurationTree();
     }
 
     public void removeTask(TaskConfiguration taskConfiguration) {
@@ -40,10 +42,12 @@ public class TaskManager {
         if (parent != null) {
             parent.getChildren().remove(taskConfiguration);
         }
+        taskConfigurationTree.saveConfigurationTree();
     }
 
     public void configureTask(TaskConfiguration taskConfiguration) {
         new TaskConfigurator(taskConfiguration, scriptContainer, pluginContainer).performDialog();
+        taskConfigurationTree.saveConfigurationTree();
     }
 
     public void runTask(TaskConfiguration taskConfiguration) {
@@ -55,8 +59,8 @@ public class TaskManager {
         frame.setVisible(true);
     }
 
-    public TaskConfiguration getRootTaskConfiguration() {
-        return rootTaskConfiguration;
+    public TaskConfigurationTree getTaskConfigurationTree() {
+        return taskConfigurationTree;
     }
 
     public TaskFactory getTaskFactory() {

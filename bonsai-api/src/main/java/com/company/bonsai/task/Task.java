@@ -4,6 +4,6 @@ public interface Task extends Runnable {
 
     String ARGUMENT_EQUAL = "=";
 
-    TaskConfiguration getConfiguration();
+    TaskConfiguration getTaskConfiguration();
 
 }

@@ -22,8 +22,11 @@
     <bean id="scriptContainer" class="com.company.bonsai.script.MapScriptContainer"
           c:scriptLoader-ref="scriptLoader" />
     <bean id="taskFactory" class="com.company.bonsai.task.SimpleTaskFactory"
+          c:scriptContainer-ref="scriptContainer"
           c:pluginContainer-ref="pluginContainer" />
     <bean id="taskExecutor" class="com.company.bonsai.task.ScheduledTaskExecutor" />
-    <bean id="rootTaskConfiguration" class="com.company.bonsai.task.ScriptEngineTaskConfiguration" c:name="root" />
+
+    <bean id="configLoader" class="com.company.bonsai.task.FileConfigLoader" c:configurationFileName="${configuration-tree-filename}" c:pluginContainer-ref="pluginContainer"/>
+    <bean id="taskConfigurationTree" class="com.company.bonsai.task.SerializableTaskTree" c:fileConfigLoader-ref="configLoader" />
 
 </beans>

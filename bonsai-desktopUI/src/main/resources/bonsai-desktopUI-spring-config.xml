@@ -16,7 +16,7 @@
     <bean class="com.company.bonsai.ui.SwingDesktopUI"
           c:pluginContainer-ref="pluginContainer"
           c:scriptContainer-ref="scriptContainer"
-          c:rootTaskConfiguration-ref="rootTaskConfiguration"
+          c:taskConfigurationTree-ref="taskConfigurationTree"
           c:taskFactory-ref="taskFactory"
           c:taskExecutor-ref="taskExecutor" />
 
