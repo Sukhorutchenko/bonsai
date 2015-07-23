@@ -18,4 +18,11 @@ public class PluginExample {
         return "Example plugin say Hello";
     }
 
+    public TaskConfiguration getTaskConfiguration() {
+        return taskConfiguration;
+    }
+
+    public ConfigExample getConfigExample() {
+        return configExample;
+    }
 }
