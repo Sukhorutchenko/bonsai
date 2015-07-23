@@ -29,4 +29,9 @@ public class PluginExample {
     public ConfigExample getConfigExample() {
         return configExample;
     }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
 }

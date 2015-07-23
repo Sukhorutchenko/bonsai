@@ -19,6 +19,7 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration, Seriali
     private String argsLine;
     private long delay;
     private final Map<Class, Object> pluginConfigurations = new HashMap<>();
+    private final Storage storage = new MapStorage();
 
     /**
      * Constructor for root element
@@ -93,12 +94,7 @@ public class ScriptEngineTaskConfiguration implements TaskConfiguration, Seriali
 
     @Override
     public Storage getStorage() {
-        return null;
-    }
-
-    @Override
-    public void setStorage(Storage storage) {
-
+        return storage;
     }
 
     @Override

@@ -23,7 +23,6 @@ public interface TaskConfiguration extends Serializable {
     void setArgsLine(String argsLine);
 
     Storage getStorage();
-    void setStorage(Storage storage);
 
     Object getPluginConfiguration(Class pluginConfigurationClass);
     void setPluginConfiguration(Class pluginConfigurationClass, Object pluginConfiguration);

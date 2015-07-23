@@ -100,6 +100,9 @@ public class ScriptEngineTask implements Task {
         if (TaskConfiguration.class.equals(environmentComponentClass)) {
             return taskConfiguration;
         }
+        if (Storage.class.equals(environmentComponentClass)) {
+            return taskConfiguration.getStorage();
+        }
         return null;
     }
 

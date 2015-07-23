@@ -1,6 +1,8 @@
 package com.company.bonsai.task;
 
-public interface Storage {
+import java.io.Serializable;
+
+public interface Storage extends Serializable {
 
     void set(Object key, Object value);
 
